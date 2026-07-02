@@ -4,7 +4,7 @@
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // ==========================================
-// 2. COREOGRAFIA DE ABERTURA
+// 2. COREOGRAFIA DE ABERTURA (NOVA VERSÃO)
 // ==========================================
 async function playOpeningSequence() {
     console.log("1. Maestro posicionado. Preparando a tela...");
@@ -24,37 +24,47 @@ async function playOpeningSequence() {
         const offlineAlert = document.getElementById('offline-alert');
 
         if (!i1 || !check) {
-            console.log("ERRO: Elementos não encontrados no HTML. Revelando GAS.");
+            console.log("ERRO: Elementos HTML não encontrados. Revelando sistema.");
             if (loader) loader.style.display = 'none';
             return;
         }
 
-        console.log("3. Iniciando a coreografia!");
-        await sleep(600);
+        // As 4 posições (Cadeiras do Carrossel)
+        const posA = 'translate(-40px, -40px)'; // Topo Esquerda
+        const posB = 'translate(40px, -40px)';  // Topo Direita
+        const posC = 'translate(-40px, 40px)';  // Baixo Esquerda
+        const posD = 'translate(40px, 40px)';   // Baixo Direita
 
-        // MOVIMENTO 2: Troca cruzada com efeito cascata
-        i1.style.transform = 'translate(10px, -10px)';
-        await sleep(100);
-        i2.style.transform = 'translate(10px, 10px)';
-        await sleep(100);
-        i3.style.transform = 'translate(-10px, -10px)';
-        await sleep(100);
-        i4.style.transform = 'translate(-10px, 10px)';
-
+        console.log("3. Iniciando a dança do estilingue!");
+        
+        // Movimento 1: Estáticos no início
         await sleep(500);
 
-        // MOVIMENTO 3: Efeito Estilingue
-        i1.style.transform = 'translate(0px, -50px)';
-        await sleep(50);
-        i2.style.transform = 'translate(50px, 0px)';
-        await sleep(50);
-        i3.style.transform = 'translate(-50px, 0px)';
-        await sleep(50);
-        i4.style.transform = 'translate(0px, 50px)';
-        
-        await sleep(400);
+        // Movimento 2: Giro anti-horário
+        i1.style.transform = posC;
+        i2.style.transform = posA;
+        i3.style.transform = posD;
+        i4.style.transform = posB;
+        await sleep(600);
 
-        // MODO OFFLINE
+        // Movimento 3: Continua o giro e revela assinatura
+        i1.style.transform = posD;
+        i2.style.transform = posC;
+        i3.style.transform = posB;
+        i4.style.transform = posA;
+        
+        signature.classList.remove('opacity-0');
+        signature.classList.add('opacity-100');
+        await sleep(600);
+
+        // Movimento 4: Último giro antes da decisão
+        i1.style.transform = posB;
+        i2.style.transform = posD;
+        i3.style.transform = posA;
+        i4.style.transform = posC;
+        await sleep(600);
+
+        // VERIFICAÇÃO OFFLINE (Congela tudo aqui)
         if (!navigator.onLine) {
             console.log("Status: Sem internet. Congelando animação.");
             [i1, i2, i3, i4].forEach(icon => icon.classList.add('freeze'));
@@ -65,34 +75,32 @@ async function playOpeningSequence() {
             return;
         }
 
-        // MOVIMENTO 4 & 5: Choque simultâneo no centro
+        // Movimento 5: O Vórtice! Eles giram 180 graus pro centro e encolhem até sumir
         [i1, i2, i3, i4].forEach(icon => {
-            icon.style.transform = 'translate(0px, 0px)';
-            icon.classList.remove('shadow-lg');
+            icon.style.transform = 'translate(0px, 0px) rotate(-180deg) scale(0)';
+            icon.style.opacity = '0';
         });
 
-        await sleep(300);
+        // Espera eles serem "sugados" pro centro
+        await sleep(350);
 
-        [i1, i2, i3, i4].forEach(icon => icon.style.opacity = '0');
+        // Movimento 6: A Fusão! O Check explode ocupando o espaço dos 4
+        check.style.opacity = '1';
+        check.style.transform = 'scale(1.2)';
+        await sleep(250);
+        check.style.transform = 'scale(1)'; // Acomoda o pop
 
-        // O Pop do Check!
-        check.classList.remove('scale-0', 'opacity-0');
-        check.classList.add('pop-effect', 'opacity-100');
+        await sleep(400);
+
+        // Movimento 7: O Check sobe um pouco para dar espaço e as Boas-vindas entram
+        check.style.transform = 'translate(0px, -50px) scale(1)';
         
         await sleep(200);
-        check.classList.remove('pop-effect');
-        check.classList.add('pop-settle');
-
-        await sleep(300);
         welcome.classList.remove('opacity-0', 'translate-y-4');
         welcome.classList.add('opacity-100', 'translate-y-0');
         
-        await sleep(400);
-        signature.classList.remove('opacity-0');
-        signature.classList.add('opacity-100');
-
-        // FADE OUT
-        console.log("4. Finalizando apresentação e revelando o sistema.");
+        // FADE OUT e Libera a Tela
+        console.log("4. Apresentação concluída. Revelando o GAS.");
         await sleep(1500);
         loader.classList.add('opacity-0');
         
@@ -124,34 +132,24 @@ function registerServiceWorker() {
 // ==========================================
 let deferredPrompt;
 
-// Captura o evento de instalação do Chrome/Android
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Previne o mini-infobar padrão do mobile de aparecer na hora errada
     e.preventDefault();
-    // Guarda o evento para dispararmos depois
     deferredPrompt = e;
     
-    // Revela o nosso botão flutuante personalizado
     const installBtn = document.getElementById('install-btn');
     if (installBtn) {
         installBtn.classList.remove('hidden');
-        // Usamos um pequeno timeout para permitir a transição suave de opacidade
         setTimeout(() => installBtn.classList.remove('opacity-0', 'translate-y-10'), 50);
     }
 });
 
-// Função acionada pelo clique no botão de instalar
 window.installPWA = async () => {
     if (!deferredPrompt) return;
     
-    // Mostra o prompt nativo
     deferredPrompt.prompt();
-    
-    // Aguarda a escolha do usuário
     const { outcome } = await deferredPrompt.userChoice;
     console.log(`Escolha de instalação: ${outcome}`);
     
-    // Limpa a variável e esconde o botão, independente da escolha
     deferredPrompt = null;
     const installBtn = document.getElementById('install-btn');
     if (installBtn) {
@@ -165,7 +163,6 @@ window.installPWA = async () => {
 // ==========================================
 function checkIOS() {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    // Verifica se já está rodando como PWA instalado
     const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 
     if (isIOS && !isStandalone) {
@@ -174,7 +171,6 @@ function checkIOS() {
             iosPrompt.classList.remove('hidden');
             setTimeout(() => iosPrompt.classList.remove('opacity-0', 'translate-y-10'), 50);
             
-            // Esconde automaticamente após 10 segundos para não irritar o usuário
             setTimeout(() => {
                 iosPrompt.classList.add('opacity-0', 'translate-y-10');
                 setTimeout(() => iosPrompt.classList.add('hidden'), 300);
@@ -184,9 +180,8 @@ function checkIOS() {
 }
 
 // ==========================================
-// 6. O GATILHO DE INÍCIO (O SEGREDO DE OURO)
+// 6. O GATILHO DE INÍCIO
 // ==========================================
-// DOMContentLoaded não espera o iframe do Google carregar, apenas o esqueleto HTML
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         playOpeningSequence();
