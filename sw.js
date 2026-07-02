@@ -1,7 +1,5 @@
-const CACHE_NAME = 'check-v1';
-
-// Arquivos do nosso Front-end (A Casca)
-const SHELL_ASSETS = [
+const CACHE_NAME = 'check-pwa-v1';
+const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './style.css',
@@ -13,39 +11,32 @@ const SHELL_ASSETS = [
     './assets/Icon512.png'
 ];
 
-// Instalação: Salva a estrutura visual no celular
-self.addEventListener('install', event => {
+// Instalação: Salva arquivos essenciais no cache
+self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(SHELL_ASSETS))
+        .then((cache) => cache.addAll(ASSETS_TO_CACHE))
     );
 });
 
-// Interceptação: Usa o cache para carregar a abertura sem gastar internet
-self.addEventListener('fetch', event => {
-    // Ignora requisições do App Script (deixe o GAS rodar sempre na rede)
-    if (!event.request.url.startsWith(self.location.origin)) {
-        return;
-    }
-
-    event.respondWith(
-        caches.match(event.request).then(cachedResponse => {
-            return cachedResponse || fetch(event.request);
-        })
-    );
-});
-
-// Limpa caches antigos em futuras atualizações suas
-self.addEventListener('activate', event => {
+// Ativação: Limpa caches antigos se houver atualização
+self.addEventListener('activate', (event) => {
     event.waitUntil(
-        caches.keys().then(keys => {
+        caches.keys().then((cacheNames) => {
             return Promise.all(
-                keys.map(key => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key);
+                cacheNames.map((cache) => {
+                    if (cache !== CACHE_NAME) {
+                        return caches.delete(cache);
                     }
                 })
             );
         })
+    );
+});
+
+// Interceptação: Busca primeiro na rede; se cair a internet, busca no cache
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        fetch(event.request).catch(() => caches.match(event.request))
     );
 });
