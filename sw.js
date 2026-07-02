@@ -1,69 +1,51 @@
-// Renderiza os ícones do pacote Lucide
-lucide.createIcons();
+const CACHE_NAME = 'check-v1';
 
-// Registra o App para funcionar como PWA/Offline
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Check!: Service Worker operante.', reg.scope))
-            .catch(err => console.error('Erro no Service Worker', err));
-    });
-}
+// Arquivos do nosso Front-end (A Casca)
+const SHELL_ASSETS = [
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './manifest.json',
+    './assets/Favicon.png',
+    './assets/Icon180.png',
+    './assets/Icon192.png',
+    './assets/Icon512.png'
+];
 
-// Orquestração da Coreografia
-document.addEventListener("DOMContentLoaded", () => {
-    const icons = document.querySelectorAll('.anim-icon');
-    const iconGrid = document.getElementById('icon-grid');
-    const mainCheck = document.getElementById('main-check');
-    const welcomeMessage = document.getElementById('welcome-message');
-    const signature = document.getElementById('signature');
-    const splashScreen = document.getElementById('splash-screen');
+// Instalação: Salva a estrutura visual no celular
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(SHELL_ASSETS))
+    );
+});
 
-    // Inicia a animação após um pequeno respiro (0.5s)
-    setTimeout(() => {
-        
-        // FASE 1: Expansão em Cascata para fora
-        icons.forEach((icon, index) => {
-            setTimeout(() => {
-                const position = icon.getAttribute('data-position');
-                icon.classList.add(`slide-${position}`);
-            }, index * 120); // 120ms de diferença cria o efeito cascata
-        });
+// Interceptação: Usa o cache para carregar a abertura sem gastar internet
+self.addEventListener('fetch', event => {
+    // Ignora requisições do App Script (deixe o GAS rodar sempre na rede)
+    if (!event.request.url.startsWith(self.location.origin)) {
+        return;
+    }
 
-        // FASE 2: O Recuo e Impacto no Centro
-        setTimeout(() => {
-            icons.forEach(icon => {
-                const position = icon.getAttribute('data-position');
-                icon.classList.remove(`slide-${position}`); // Tira o deslize, forçando volta ao centro
-            });
+    event.respondWith(
+        caches.match(event.request).then(cachedResponse => {
+            return cachedResponse || fetch(event.request);
+        })
+    );
+});
 
-            // FASE 3: A Fusão ("Pop" do Check principal)
-            setTimeout(() => {
-                iconGrid.style.opacity = '0'; // Apaga os ícones coloridos
-                mainCheck.classList.add('animate-pop'); // O Check pula na tela
-
-                // FASE 4: Apresentação da Assinatura e Boas-Vindas
-                setTimeout(() => {
-                    welcomeMessage.classList.remove('opacity-0', 'translate-y-4');
-                    signature.classList.remove('opacity-0');
-
-                    // FASE 5: Transição para o Sistema do Sesc
-                    setTimeout(() => {
-                        // Fade Out da tela inteira
-                        splashScreen.style.opacity = '0';
-                        
-                        // Remoção da barreira para permitir cliques no GAS
-                        setTimeout(() => {
-                            splashScreen.classList.add('hidden-fully');
-                        }, 1000);
-
-                    }, 2200); // Dá ~2 segundos para o usuário ler a tela
-
-                }, 400); // Inicia os textos enquanto o Check estabiliza
-
-            }, 300); // Tempo exato em que os ícones coloridos batem no centro
-
-        }, 1100); // Aguarda todos abrirem na cascata para puxar de volta
-
-    }, 500); 
+// Limpa caches antigos em futuras atualizações suas
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(
+                keys.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key);
+                    }
+                })
+            );
+        })
+    );
 });
