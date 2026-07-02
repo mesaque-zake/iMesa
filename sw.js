@@ -1,4 +1,4 @@
-const CACHE_NAME = 'check-pwa-v1';
+const CACHE_NAME = 'check-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
