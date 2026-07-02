@@ -1,4 +1,6 @@
-const CACHE_NAME = 'check-v1';
+const CACHE_NAME = 'check-v2';
+
+// Arquivos da "Casca" do aplicativo (App Shell)
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -11,21 +13,31 @@ const ASSETS_TO_CACHE = [
     './assets/Icon512.png'
 ];
 
-// Instalação: Salva arquivos essenciais no cache
+// ==========================================
+// 1. INSTALAÇÃO DO SERVICE WORKER
+// ==========================================
+// Salva os arquivos essenciais no cache do navegador
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-        .then((cache) => cache.addAll(ASSETS_TO_CACHE))
+        .then((cache) => {
+            console.log('[Service Worker] Fazendo cache do App Shell');
+            return cache.addAll(ASSETS_TO_CACHE);
+        })
     );
 });
 
-// Ativação: Limpa caches antigos se houver atualização
+// ==========================================
+// 2. ATIVAÇÃO DO SERVICE WORKER
+// ==========================================
+// Limpa caches antigos se você mudar a versão (ex: 'check-v2')
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cache) => {
                     if (cache !== CACHE_NAME) {
+                        console.log('[Service Worker] Limpando cache antigo:', cache);
                         return caches.delete(cache);
                     }
                 })
@@ -34,9 +46,15 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Interceptação: Busca primeiro na rede; se cair a internet, busca no cache
+// ==========================================
+// 3. INTERCEPTAÇÃO DE REDE (FETCH)
+// ==========================================
+// Estratégia: Tenta a rede primeiro. Se cair a internet, busca no cache.
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        fetch(event.request).catch(() => caches.match(event.request))
+        fetch(event.request).catch(() => {
+            console.log('[Service Worker] Offline detectado. Servindo do cache:', event.request.url);
+            return caches.match(event.request);
+        })
     );
 });
