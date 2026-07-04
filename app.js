@@ -90,8 +90,8 @@ async function playOpeningSequence() {
             icon.style.opacity = '0';
         });
 
-        // ESPERA ZERO! O Check nasce engolindo eles.
-        await sleep(50); 
+        // REMOVIDO O TEMPO DE ESPERA!
+        // O Check nasce engolindo eles IMEDIATAMENTE no exato momento da sucção.
         check.style.opacity = '1';
         check.style.transform = 'scale(1.15)';
         
