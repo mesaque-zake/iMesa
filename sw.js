@@ -1,4 +1,4 @@
-const CACHE_NAME = 'check-v2';
+const CACHE_NAME = 'check-v3';
 
 // Arquivos da "Casca" do aplicativo (App Shell)
 const ASSETS_TO_CACHE = [
@@ -7,16 +7,15 @@ const ASSETS_TO_CACHE = [
     './style.css',
     './app.js',
     './manifest.json',
-    './assets/Favicon.png',
-    './assets/Icon180.png',
-    './assets/Icon192.png',
-    './assets/Icon512.png'
+    './Favicon.png',
+    './Icon180.png',
+    './Icon192.png',
+    './Icon512.png'
 ];
 
 // ==========================================
 // 1. INSTALAÇÃO DO SERVICE WORKER
 // ==========================================
-// Salva os arquivos essenciais no cache do navegador
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -30,7 +29,6 @@ self.addEventListener('install', (event) => {
 // ==========================================
 // 2. ATIVAÇÃO DO SERVICE WORKER
 // ==========================================
-// Limpa caches antigos se você mudar a versão (ex: 'check-v2')
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -49,7 +47,6 @@ self.addEventListener('activate', (event) => {
 // ==========================================
 // 3. INTERCEPTAÇÃO DE REDE (FETCH)
 // ==========================================
-// Estratégia: Tenta a rede primeiro. Se cair a internet, busca no cache.
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(event.request).catch(() => {
