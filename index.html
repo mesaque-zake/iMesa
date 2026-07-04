@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Check!</title>
     
+    <!-- Open Graph / Prévia para WhatsApp e Redes Sociais -->
     <meta property="og:title" content="Check! - Controle Operacional">
     <meta property="og:description" content="Acesse agora o Controle Operacional do Sesc Mesa Brasil - Unidade Itaquera">
     <meta property="og:image" content="Icon512.png">
@@ -17,7 +18,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -58,30 +59,36 @@
 
     <div id="loader-screen" class="absolute inset-0 bg-slate-50 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
         
-        <div class="relative w-48 h-48 flex items-center justify-center transform transition-transform duration-700 md:scale-150">
+        <!-- Wrapper Centralizador: Garante que os ícones e o texto andem sempre juntos -->
+        <div class="relative flex flex-col items-center justify-center z-20">
             
-            <div id="icon-1" class="actor absolute w-16 h-16 bg-blue-600 rounded-2xl shadow-2xl shadow-blue-600/[0.65] flex items-center justify-center z-10" style="transform: translate(-40px, -40px);">
-                <i data-lucide="smartphone" class="text-white w-8 h-8"></i>
-            </div>
-            
-            <div id="icon-2" class="actor absolute w-16 h-16 bg-emerald-600 rounded-2xl shadow-2xl shadow-emerald-600/[0.65] flex items-center justify-center z-10" style="transform: translate(40px, -40px);">
-                <i data-lucide="droplets" class="text-white w-8 h-8"></i>
+            <div class="relative w-48 h-48 flex items-center justify-center transform transition-transform duration-700 md:scale-125">
+                
+                <div id="icon-1" class="actor absolute w-16 h-16 bg-blue-600 rounded-2xl shadow-2xl shadow-blue-600/[0.65] flex items-center justify-center z-10" style="transform: translate(-40px, -40px);">
+                    <i data-lucide="smartphone" class="text-white w-8 h-8"></i>
+                </div>
+                
+                <div id="icon-2" class="actor absolute w-16 h-16 bg-emerald-600 rounded-2xl shadow-2xl shadow-emerald-600/[0.65] flex items-center justify-center z-10" style="transform: translate(40px, -40px);">
+                    <i data-lucide="droplets" class="text-white w-8 h-8"></i>
+                </div>
+
+                <div id="icon-3" class="actor absolute w-16 h-16 bg-amber-500 rounded-2xl shadow-2xl shadow-amber-500/[0.65] flex items-center justify-center z-10" style="transform: translate(-40px, 40px);">
+                    <i data-lucide="bar-chart-3" class="text-white w-8 h-8"></i>
+                </div>
+
+                <div id="icon-4" class="actor absolute w-16 h-16 bg-red-600 rounded-2xl shadow-2xl shadow-red-600/[0.65] flex items-center justify-center z-10" style="transform: translate(40px, 40px);">
+                    <i data-lucide="file-text" class="text-white w-8 h-8"></i>
+                </div>
+
+                <div id="icon-check" class="actor absolute w-28 h-28 bg-slate-800 rounded-3xl shadow-2xl shadow-slate-800/50 flex items-center justify-center z-20" style="transform: scale(0); opacity: 0;">
+                    <i data-lucide="check-square" class="text-white w-14 h-14"></i>
+                </div>
+
             </div>
 
-            <div id="icon-3" class="actor absolute w-16 h-16 bg-amber-500 rounded-2xl shadow-2xl shadow-amber-500/[0.65] flex items-center justify-center z-10" style="transform: translate(-40px, 40px);">
-                <i data-lucide="bar-chart-3" class="text-white w-8 h-8"></i>
-            </div>
-
-            <div id="icon-4" class="actor absolute w-16 h-16 bg-red-600 rounded-2xl shadow-2xl shadow-red-600/[0.65] flex items-center justify-center z-10" style="transform: translate(40px, 40px);">
-                <i data-lucide="file-text" class="text-white w-8 h-8"></i>
-            </div>
-
-            <div id="icon-check" class="actor absolute w-28 h-28 bg-slate-800 rounded-3xl shadow-2xl shadow-slate-800/50 flex items-center justify-center z-20" style="transform: scale(0); opacity: 0;">
-                <i data-lucide="check-square" class="text-white w-14 h-14"></i>
-            </div>
-
-            <div id="welcome-text" class="absolute top-full mt-2 md:mt-4 flex flex-col items-center opacity-0 transform translate-y-4 transition-all duration-700 w-full text-center">
-                <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-slate-700 to-black tracking-tighter drop-shadow-sm">Check!</h1>
+            <!-- Título: Mais fino (bold em vez de extrabold), sombreado e fora do zoom do desktop -->
+            <div id="welcome-text" class="absolute top-full mt-4 flex flex-col items-center opacity-0 transform translate-y-4 transition-all duration-700 w-full text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-800 tracking-tight drop-shadow-lg shadow-slate-400">Check!</h1>
             </div>
 
         </div>
