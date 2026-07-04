@@ -1,6 +1,5 @@
-const CACHE_NAME = 'check-v3';
+const CACHE_NAME = 'check-v4';
 
-// Arquivos da "Casca" do aplicativo (App Shell)
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -48,10 +47,27 @@ self.addEventListener('activate', (event) => {
 // 3. INTERCEPTAÇÃO DE REDE (FETCH)
 // ==========================================
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        fetch(event.request).catch(() => {
-            console.log('[Service Worker] Offline detectado. Servindo do cache:', event.request.url);
-            return caches.match(event.request);
-        })
-    );
+    // Intercepta CDNs (Tailwind, Lucide, Fontes) e salva em cache dinamicamente
+    if (event.request.url.includes('tailwindcss') || event.request.url.includes('lucide') || event.request.url.includes('fonts')) {
+        event.respondWith(
+            caches.match(event.request).then((cachedResponse) => {
+                if (cachedResponse) return cachedResponse;
+                return fetch(event.request).then((networkResponse) => {
+                    const responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                    return networkResponse;
+                }).catch(() => console.log('[Service Worker] Falha ao buscar CDN offline'));
+            })
+        );
+    } else {
+        // Estratégia para os arquivos locais
+        event.respondWith(
+            fetch(event.request).catch(() => {
+                console.log('[Service Worker] Offline detectado. Servindo do cache:', event.request.url);
+                return caches.match(event.request);
+            })
+        );
+    }
 });
