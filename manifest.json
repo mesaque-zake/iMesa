@@ -1,6 +1,6 @@
 {
-  "name": "Check! Controle Operacional",
-  "short_name": "Check!",
+  "name": "iMesa! Ecosistema Operacional",
+  "short_name": "iMesa!",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
