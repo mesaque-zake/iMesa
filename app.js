@@ -112,13 +112,12 @@ async function playOpeningSequence() {
             icon.style.opacity = '0';
         });
 
-        // 2. Revela a Aura Galáctica Dançante em segundo plano
+        // 2. Revela a Aura Galáctica Dançante na periferia (65px) de forma muito suave e gradual
         if (glowContainer) {
             glowContainer.classList.remove('hidden');
-            setTimeout(() => {
-                glowContainer.classList.remove('opacity-0');
-                glowContainer.classList.add('opacity-100');
-            }, 50);
+            await sleep(50); // Delay sutil para permitir a renderização da div antes de transicionar a opacidade
+            glowContainer.classList.remove('opacity-0');
+            glowContainer.classList.add('opacity-100');
         }
 
         // 3. O SVG de fusão surge engolindo a todos instantaneamente
@@ -130,18 +129,11 @@ async function playOpeningSequence() {
 
         await sleep(200);
 
-        // 4. DISPARA O PULSO DE ENERGIA NEON dentro do vetor iM (da esquerda para a direita)
-        const pulseAnim = document.getElementById('pulse-anim');
-        if (pulseAnim) {
-            console.log("[PWA] Iniciando pulso de energia pelo monograma...");
-            pulseAnim.beginElement();
-        }
-
         // Revela o título "Check!"
         welcome.classList.remove('opacity-0', 'translate-y-4');
         welcome.classList.add('opacity-100', 'translate-y-0');
         
-        // 5. Sincronização Inteligente de Carregamento (Evita a tela branca do iframe)
+        // 4. Sincronização Inteligente de Carregamento (Evita a tela branca do iframe)
         // Aguarda até o iframe do Google estar realmente pronto ou dá timeout após 15 segundos
         let timeoutCounter = 0;
         while (!iframeLoaded && timeoutCounter < 30) {
@@ -151,7 +143,7 @@ async function playOpeningSequence() {
         }
 
         console.log("5. iMesa pronto. Removendo Splash Screen.");
-        await sleep(1000); // Garante a permanência do pulso luminoso por tempo confortável
+        await sleep(1000); // Garante a permanência estável da aura por tempo confortável
         loader.classList.add('opacity-0');
         
         setTimeout(() => {
