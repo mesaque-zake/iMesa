@@ -127,33 +127,30 @@
                     <div id="glow-4" class="absolute w-12 h-12 rounded-full bg-red-500/35 blur-xl transition-transform duration-1000"></div>
                 </div>
 
-                <!-- CARD DE FUSÃO "iM" MORPHING (Carrega "ESA" oculto para se expandir no Ato 8) -->
-                <div id="icon-check" class="actor absolute w-48 h-16 flex items-center justify-center z-30" style="transform: scale(0); opacity: 0;">
-                    <div id="monogram-card" class="h-16 px-4 bg-[#020f3d] rounded-2xl shadow-xl flex items-center justify-center font-montserrat text-lg text-white select-none transition-all duration-700 overflow-hidden whitespace-nowrap">
+                <!-- O ALVO DE FUSÃO MONOGRAMA "iM" MORPHING ( Montserrat de alta fidelidade ) -->
+                <div id="icon-check" class="actor absolute w-64 h-24 flex items-center justify-center z-30" style="transform: scale(0); opacity: 0;">
+                    <!-- O Card principal que contém apenas "i" e "M" (Aumentado para w-20 h-20 e com glitch ativo no "i") -->
+                    <div id="monogram-card" class="w-20 h-20 bg-[#020f3d] rounded-2xl shadow-2xl shadow-[#020f3d]/45 flex items-center justify-center font-montserrat text-3xl text-white select-none transition-all duration-700 overflow-hidden whitespace-nowrap">
                         <span id="monogram-i" class="font-normal animate-i-glitch inline-block transition-colors duration-700">i</span>
                         <span id="monogram-M" class="font-extrabold ml-[0.5px] transition-colors duration-700">M</span>
-                        <span id="monogram-ESA" class="font-extrabold opacity-0 max-w-0 inline-block overflow-hidden transition-all duration-500" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);">ESA</span>
                     </div>
+                    <!-- O "ESA" que fica oculto FORA do card, e desliza na cor escura #020f3d ao revelar (Montserrat ExtraBold) -->
+                    <span id="monogram-ESA" class="font-montserrat text-3xl font-extrabold text-[#020f3d] opacity-0 max-w-0 inline-block overflow-hidden transition-all duration-500" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); margin-left: 0.5px;">ESA</span>
                 </div>
 
-                <!-- WATERMARKS SESC E BRASIL (Alinhadas de forma absoluta em relação ao centro) -->
-                <div id="welcome-sesc" class="absolute text-center opacity-0 transform translate-y-2 transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(-50px);">
-                    <span class="block text-slate-300 font-normal text-xs leading-none tracking-widest uppercase">Sesc</span>
+                <!-- WATERMARKS SESC E BRASIL (Alinhadas de forma absoluta e mais juntas/maiores) -->
+                <!-- Sesc e MESA em Montserrat ExtraBold (font-extrabold) -->
+                <div id="welcome-sesc" class="absolute text-center opacity-0 transform translate-y-2 transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(-48px);">
+                    <span class="block text-slate-300 font-extrabold text-sm leading-none tracking-widest uppercase">Sesc</span>
                 </div>
-                <div id="welcome-brasil" class="absolute text-center opacity-0 transform -translate-y-2 transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(50px);">
-                    <span class="block text-slate-300 font-normal text-[10px] tracking-widest uppercase">Brasil</span>
+                <div id="welcome-brasil" class="absolute text-center opacity-0 transform -translate-y-2 transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(48px);">
+                    <span class="block text-slate-300 font-normal text-xs tracking-widest uppercase">Brasil</span>
                 </div>
 
             </div>
-
-            <!-- TÍTULO MESTRE "iMESA" (Com animação de Glitch no Ato 10) -->
-            <div id="welcome-text" class="text-center mt-6 select-none font-montserrat relative z-20">
-              <h1 id="brand-title" class="text-3xl font-black text-slate-800 tracking-tight leading-none opacity-0 transform translate-y-4 transition-all duration-700">iMesa</h1>
-            </div>
-            
         </div>
 
-        <!-- ALERTA DE SEM CONEXÃO (Aparece no centro no Big Bang offline) -->
+        <!-- Alerta de Conexão Offline -->
         <div id="offline-alert" class="absolute flex flex-col items-center opacity-0 scale-95 transform transition-all duration-1000 hidden z-30">
             <i data-lucide="wifi-off" class="text-slate-400 w-10 h-10 mb-3"></i>
             <span class="text-xl font-bold text-slate-700 mb-4 tracking-tight">Sem Conexão</span>
