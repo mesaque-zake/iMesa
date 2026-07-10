@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sesc iMesa Brasil</title>
     
-    <!-- Open Graph / Prévia de Redes Sociais Otimizada -->
     <meta property="og:title" content="iMesa!">
     <meta property="og:description" content="Acesse o Ecossistema Operacional do Sesc Mesa Brasil - Unidade Itaquera">
     <meta property="og:image" content="assets/Share.png">
@@ -16,8 +15,7 @@
     <link rel="icon" type="image/png" href="assets/Favicon.png">
     <link rel="apple-touch-icon" href="assets/Icon180.png">
     
-    <!-- Fontes do Google: Plus Jakarta Sans, Dancing Script e Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Montserrat:wght@400;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +37,6 @@
 </head>
 <body class="bg-slate-50 overflow-hidden font-sans text-slate-800 antialiased select-none w-screen h-screen m-0 p-0">
 
-    <!-- Iframe do GAS (Background) -->
     <iframe 
         id="gas-frame"
         src="https://script.google.com/macros/s/AKfycbzEOZzvFYvwESMxk7ZcWSL4P0zvssqSiscWl0fzn5eb-15OQWzDgBrj9XU0C5fZGTXR/exec" 
@@ -47,7 +44,6 @@
         allow="geolocation *; clipboard-write *">
     </iframe>
 
-    <!-- Botoes PWA (Ocultos inicialmente) -->
     <button id="install-btn" onclick="installPWA()" class="absolute bottom-6 right-6 md:bottom-10 md:right-10 bg-slate-800 hover:bg-slate-700 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-2 z-40 hidden opacity-0 translate-y-10 transition-all duration-500">
         <i data-lucide="download" class="w-5 h-5"></i>
         <span class="font-semibold text-sm">Instalar App</span>
@@ -63,15 +59,10 @@
         <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-r border-b border-slate-100"></div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- TELA DO CARREGADOR (O PALCO CENTRALIZADO)  -->
-    <!-- ========================================== -->
     <div id="loader-screen" class="absolute inset-0 w-full h-full bg-slate-50 z-50 flex items-center justify-center transition-all duration-[600ms] origin-center">
         
-        <!-- ÂNCORA DE GRAVIDADE (Garante 100% de centralização X e Y em qualquer tela) -->
-        <div class="relative flex items-center justify-center w-[300px] h-[300px] md:scale-125 lg:scale-150 transform transition-transform duration-700 select-none">
+        <div class="relative flex items-center justify-center w-[400px] h-[400px] md:scale-110 transform transition-transform duration-700 select-none">
             
-            <!-- ====== ATORES DA DANÇA (Grade 6x8 Invisível) ====== -->
             <div id="icon-A" class="actor absolute w-12 h-12 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
                 <i data-lucide="smartphone" class="text-white w-6 h-6"></i>
             </div>
@@ -97,40 +88,33 @@
                 <i data-lucide="settings" class="text-white w-6 h-6"></i>
             </div>
 
-            <!-- ====== NUVEM DE ENERGIA MULTICOLORIDA ====== -->
-            <div id="glow-container" class="absolute w-[400px] h-[400px] flex items-center justify-center pointer-events-none opacity-0 scale-50 transition-all duration-1000 z-10">
-                <div class="absolute w-32 h-32 rounded-full bg-blue-500/20 blur-2xl transform translate-x-[-30px] translate-y-[-30px]"></div>
-                <div class="absolute w-32 h-32 rounded-full bg-fuchsia-500/20 blur-2xl transform translate-x-[30px] translate-y-[30px]"></div>
-                <div class="absolute w-32 h-32 rounded-full bg-emerald-500/20 blur-2xl transform translate-x-[-30px] translate-y-[30px]"></div>
-                <div class="absolute w-32 h-32 rounded-full bg-amber-500/20 blur-2xl transform translate-x-[30px] translate-y-[-30px]"></div>
+            <div id="glow-container" class="absolute w-[450px] h-[450px] flex items-center justify-center pointer-events-none opacity-0 scale-50 transition-all duration-[800ms] z-10">
+                <div class="absolute w-40 h-40 rounded-full bg-blue-500/35 blur-3xl transform translate-x-[-40px] translate-y-[-40px]"></div>
+                <div class="absolute w-40 h-40 rounded-full bg-fuchsia-500/35 blur-3xl transform translate-x-[40px] translate-y-[40px]"></div>
+                <div class="absolute w-40 h-40 rounded-full bg-emerald-500/35 blur-3xl transform translate-x-[-40px] translate-y-[40px]"></div>
+                <div class="absolute w-40 h-40 rounded-full bg-amber-500/35 blur-3xl transform translate-x-[40px] translate-y-[-40px]"></div>
             </div>
 
-            <!-- ====== O MONOLITO: SESC iMESA BRASIL ====== -->
-            <div id="monolith-brand" class="absolute flex flex-col items-center justify-center opacity-0 scale-90 transition-all duration-700 z-30 pointer-events-none">
-                <!-- SESC -->
-                <span id="mono-sesc" class="font-montserrat font-800 text-slate-200/70 text-5xl md:text-6xl tracking-widest uppercase transform translate-y-6 transition-all duration-[800ms]">Sesc</span>
+            <div id="monolith-brand" class="absolute flex flex-col items-center justify-center opacity-0 scale-95 transition-all duration-500 z-30 pointer-events-none w-full">
+                <span id="mono-sesc" class="font-montserrat font-extrabold text-[#020f3d]/15 text-6xl md:text-7xl tracking-widest uppercase transition-all duration-500 select-none pb-2">Sesc</span>
                 
-                <!-- iMESA (O bloco mutante) -->
-                <div id="mono-imesa-container" class="relative flex items-center justify-center z-40 transition-all duration-500">
-                    <div id="mono-imesa-text" class="font-montserrat text-[#020f3d] text-4xl md:text-5xl flex items-baseline relative z-40 transition-all duration-500">
-                        <span id="mono-i" class="font-400 animate-i-glitch transition-colors duration-300">i</span>
-                        <span id="mono-M" class="font-800 transition-colors duration-300">M</span>
-                        <!-- A Extensão "ESA" fica colada no "M", mas sua largura (max-width) será esmagada para zero via JS -->
-                        <div id="mono-esa-wrapper" class="overflow-hidden transition-all duration-500 origin-left" style="max-width: 200px;">
-                            <span id="mono-ESA" class="font-800 block">ESA</span>
-                        </div>
-                    </div>
-                    <!-- O Card de fundo azul (Ícone Oficial) que nasce de trás do iM -->
-                    <div id="mono-card-bg" class="absolute inset-0 bg-[#020f3d] rounded-2xl z-30 scale-0 opacity-0 transition-all duration-500 flex items-center justify-center shadow-xl"></div>
+                <div id="mono-imesa-text" class="font-montserrat text-[#020f3d] text-5xl md:text-6xl flex items-baseline justify-center tracking-tight transition-all duration-300">
+                    <span id="mono-i" class="font-normal animate-i-glitch">i</span>
+                    <span id="mono-mesa" class="font-extrabold">MESA</span>
                 </div>
 
-                <!-- BRASIL -->
-                <span id="mono-brasil" class="font-montserrat font-800 text-slate-200/70 text-4xl md:text-5xl tracking-[0.2em] uppercase transform -translate-y-6 transition-all duration-[800ms]">Brasil</span>
+                <span id="mono-brasil" class="font-montserrat font-extrabold text-[#020f3d]/15 text-5xl md:text-6xl tracking-[0.18em] uppercase transition-all duration-500 select-none pt-2">Brasil</span>
+            </div>
+
+            <div id="official-icon-card" class="absolute w-24 h-24 bg-[#020f3d] rounded-3xl flex items-center justify-center font-montserrat text-4xl text-white opacity-0 scale-0 shadow-2xl transition-all duration-500 z-40">
+                <div class="flex items-baseline justify-center select-none">
+                    <span id="card-i" class="font-normal animate-i-glitch text-white">i</span>
+                    <span id="card-M" class="font-extrabold text-white ml-[0.5px]">M</span>
+                </div>
             </div>
 
         </div>
 
-        <!-- Tela Offline -->
         <div id="offline-alert" class="absolute flex flex-col items-center justify-center opacity-0 scale-95 transform transition-all duration-500 hidden z-50">
             <i data-lucide="wifi-off" class="text-slate-400 w-12 h-12 mb-3"></i>
             <span class="text-xl font-montserrat font-800 text-slate-700 mb-4 tracking-tight">Sem Conexão</span>
@@ -139,7 +123,6 @@
             </button>
         </div>
 
-        <!-- Assinatura Mesaque -->
         <div id="signature" class="absolute bottom-8 opacity-0 transition-opacity duration-1000 z-30 w-full text-center pointer-events-none">
             <p class="text-xs md:text-sm font-medium text-slate-400">
                 Powered with <span class="text-[#e80523] text-sm md:text-base leading-none">&#10084;</span> by <strong class="text-slate-600">Mesaque</strong>
