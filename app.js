@@ -1,7 +1,7 @@
 /**
  * ==========================================
  * MOTOR LÓGICO PRINCIPAL DO PWA (CORE)
- * VERSÃO PREMIUM ULTRA-OTIMIZADA (SINAL VERDE)
+ * VERSÃO CINEMÁTICA ULTRA-OTIMIZADA
  * ==========================================
  */
 
@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// COREOGRAFIA DE ABERTURA EM 10 ATOS
+// COREOGRAFIA DE ABERTURA EM 10 ATOS (DANCE)
 // ==========================================
 async function playOpeningSequence() {
     console.log("[PWA] Iniciando a coreografia do Pentágono...");
@@ -41,6 +41,8 @@ async function playOpeningSequence() {
         
         const check = document.getElementById('icon-check'); // Monograma Card (X)
         const welcome = document.getElementById('welcome-text');
+        const welcomeSesc = document.getElementById('welcome-sesc');
+        const welcomeBrasil = document.getElementById('welcome-brasil');
         const signature = document.getElementById('signature');
         const loader = document.getElementById('loader-screen');
         const offlineAlert = document.getElementById('offline-alert');
@@ -67,45 +69,47 @@ async function playOpeningSequence() {
         }
         await sleep(600);
 
-        // --- ATO 3: Lavagem (B) e Visão Geral (C) nascem formando a grade 2x2 ---
+        // --- ATO 3: Lavagem (B) e Visão Geral (C) nascem formando o quadrado perfeito 2x2 ---
+        // A distância vertical e horizontal é mantida estritamente idêntica (60px) para simetria absoluta
         i2.style.opacity = '1';
-        i2.style.transform = 'translate(-40px, 30px) scale(1)';
+        i2.style.transform = 'translate(-30px, 30px) scale(1)';
         i3.style.opacity = '1';
-        i3.style.transform = 'translate(40px, -30px) scale(1)';
+        i3.style.transform = 'translate(30px, -30px) scale(1)';
         
-        // Move D e A para fechar o quadrado 2x2
-        i5.style.transform = 'translate(-40px, -30px) scale(1)';
-        i1.style.transform = 'translate(40px, 30px) scale(1)';
+        // Move D e A para fechar o quadrado perfeito de 60px x 60px
+        i5.style.transform = 'translate(-30px, -30px) scale(1)';
+        i1.style.transform = 'translate(30px, 30px) scale(1)';
         await sleep(600);
 
         // --- ATO 4: Cascata Elástica Rápida ("Pop-Pop-Pop-Pop") ---
-        // Nascem H, G, E, F de forma encadeada de milissegundos, empurrando a grade
+        // Os 4 ícones restantes surgem do centro de forma encadeada, empurrando os vizinhos assim que aparecem!
         
-        // 4.1 Relatórios (H)
+        // 4.1 Relatórios (H) brota do centro e se desloca, empurrando D (Ways) e C (Visão Geral)
         i4.style.opacity = '1';
         i4.style.transform = 'translate(-35px, -10px) scale(1)';
+        i5.style.transform = 'translate(-70px, -20px) scale(1)'; // D se desloca
+        i3.style.transform = 'translate(30px, -50px) scale(1)';  // C se desloca
         await sleep(150);
 
-        // 4.2 Admin (G)
+        // 4.2 Admin (G) brota do centro e se desloca, empurrando A (Aparelhos) e H (Relatórios)
         i8.style.opacity = '1';
         i8.style.transform = 'translate(35px, -10px) scale(1)';
+        i1.style.transform = 'translate(70px, 40px) scale(1)';  // A se desloca
+        i3.style.transform = 'translate(35px, -70px) scale(1)'; // C chega na coordenada final!
         await sleep(150);
 
-        // 4.3 Reembolsos (E)
+        // 4.3 Reembolsos (E) brota do centro e se desloca, empurrando B (Lavagem) e D (Ways)
         i6.style.opacity = '1';
         i6.style.transform = 'translate(-35px, 50px) scale(1)';
+        i2.style.transform = 'translate(-35px, 70px) scale(1)';  // B se desloca
+        i5.style.transform = 'translate(-105px, -10px) scale(1)'; // D chega na coordenada final!
         await sleep(150);
 
-        // 4.4 Mini Games (F)
+        // 4.4 Mini Games (F) brota do centro e se desloca, empurrando A (Aparelhos) e B (Lavagem) para as posições finais
         i7.style.opacity = '1';
         i7.style.transform = 'translate(35px, 50px) scale(1)';
-        await sleep(150);
-
-        // Assenta os outros atores nas suas coordenadas finais expansivas de estilingue
-        i5.style.transform = 'translate(-105px, -10px) scale(1)'; // D
-        i1.style.transform = 'translate(105px, 50px) scale(1)';  // A
-        i3.style.transform = 'translate(35px, -70px) scale(1)';  // C
-        i2.style.transform = 'translate(-35px, 110px) scale(1)'; // B
+        i1.style.transform = 'translate(105px, 50px) scale(1)';  // A chega na coordenada final!
+        i2.style.transform = 'translate(-35px, 110px) scale(1)'; // B chega na coordenada final!
         await sleep(600);
 
         // --- CENA DE REPOSIÇÃO: OFFLINE (O BIG BANG DIGITAL) ---
@@ -116,7 +120,7 @@ async function playOpeningSequence() {
                 icon.classList.add('freeze');
             });
             
-            // Arremessa os 8 ícones cinzas desordenados para as bordas externas da tela (Shatter)
+            // Arremessa violentamente os 8 ícones cinzas desordenados para as bordas externas da tela (Shatter)
             i5.style.transform = 'translate(-250px, -100px) rotate(-180deg) scale(0.4)';  // D
             i4.style.transform = 'translate(-120px, -250px) rotate(-90deg) scale(0.4)';   // H
             i8.style.transform = 'translate(120px, -250px) rotate(90deg) scale(0.4)';     // G
@@ -139,7 +143,7 @@ async function playOpeningSequence() {
             icon.style.transform = 'translate(0px, 0px) rotate(-180deg) scale(0.2)';
             icon.style.opacity = '0';
         });
-        await sleep(300); // Momento exato do impacto (Ato 6)
+        await sleep(300); // Momento exato do impacto da colisão (Ato 6)
 
         check.style.opacity = '1';
         check.style.transform = 'scale(1.15)';
@@ -165,9 +169,11 @@ async function playOpeningSequence() {
         }
         await sleep(400);
 
-        // --- ATO 8: Morte do Card e Revelação do "iMESA" ---
+        // --- ATO 8: Morte do Card e Revelação Física do "iMESA" (O "Morphing") ---
         const monoCard = document.getElementById('monogram-card');
-        if (monoCard) {
+        const monoESA = document.getElementById('monogram-ESA');
+        if (monoCard && monoESA) {
+            // Desmancha as bordas e o fundo azul do card central
             monoCard.style.backgroundColor = 'transparent';
             monoCard.style.boxShadow = 'none';
             
@@ -175,12 +181,26 @@ async function playOpeningSequence() {
             const monoM = document.getElementById('monogram-M');
             if (monoI) monoI.style.color = '#020f3d';
             if (monoM) monoM.style.color = '#020f3d';
+            
+            // As letras "ESA" deslizam horizontalmente para a direita revelando a palavra "iMESA"
+            monoESA.classList.remove('opacity-0', 'max-w-0');
+            monoESA.classList.add('opacity-100', 'max-w-[150px]');
         }
-        await sleep(200);
+        await sleep(400);
 
         // --- ATO 9: O Sesc Mesa Brasil Watermark ---
-        welcome.classList.remove('opacity-0', 'translate-y-4');
-        welcome.classList.add('opacity-100', 'translate-y-0');
+        // As marcas d'água de Sesc e Brasil surgem suavemente flutuando de forma absoluta acima e abaixo do iMESA
+        if (welcomeSesc) {
+            welcomeSesc.classList.remove('opacity-0');
+            welcomeSesc.classList.add('opacity-100');
+            welcomeSesc.style.transform = 'translateY(-40px)';
+        }
+        if (welcomeBrasil) {
+            welcomeBrasil.classList.remove('opacity-0');
+            welcomeBrasil.classList.add('opacity-100');
+            welcomeBrasil.style.transform = 'translateY(40px)';
+        }
+        await sleep(400);
 
         // --- Loop de Sincronia de Carregamento ---
         let timeoutCounter = 0;
@@ -193,32 +213,34 @@ async function playOpeningSequence() {
         // --- ATO 10: Vórtice de Implosão, Glitch e Revelação do GAS ---
         console.log("[PWA] iMesa pronto. Iniciando implosão e transição...");
         
-        // O Glitch toma conta do título principal "iMESA"
-        const brandTitle = document.getElementById('brand-title');
-        if (brandTitle) {
-            brandTitle.classList.add('animate-imesa-glitch');
+        // O Glitch toma conta do título "iMESA" de forma pouco exagerada
+        const monogramCard = document.getElementById('monogram-card');
+        if (monogramCard) {
+            monogramCard.classList.add('animate-imesa-glitch');
         }
         
-        await sleep(200);
+        await sleep(300);
 
-        // Implode as auras, marcas d'água e o logo em direção ao centro de gravidade (Vórtice)
+        // IMPLOSÃO: Puxa as marcas d'água, as auras coloridas e o logo para dentro do "iMESA" (Vórtice)
         if (glowContainer) {
             glowContainer.style.transform = 'scale(0) rotate(360deg)';
             glowContainer.style.opacity = '0';
         }
+        if (welcomeSesc) {
+            welcomeSesc.style.transform = 'translateY(0px) scale(0)';
+            welcomeSesc.style.opacity = '0';
+        }
+        if (welcomeBrasil) {
+            welcomeBrasil.style.transform = 'translateY(0px) scale(0)';
+            welcomeBrasil.style.opacity = '0';
+        }
         
-        const welcomeSpans = welcome.querySelectorAll('span');
-        welcomeSpans.forEach(span => {
-            span.style.transform = 'scale(0) translate(0px, 0px)';
-            span.style.opacity = '0';
-            span.style.transition = 'all 0.4s ease-in-out';
-        });
-        
-        await sleep(400); // Tempo do fechamento da implosão
+        await sleep(400); // Tempo do fechamento do vórtice de energia
 
-        // Sobe a cortina digital de forma veloz para revelar o GAS carregado por baixo!
-        loader.style.transition = 'transform 0.6s cubic-bezier(0.85, 0, 0.15, 1)';
-        loader.style.transform = 'translateY(-100%)';
+        // A CORTINA IMPlODE: O próprio fundo branco do loader sofre uma implosão para o centro antes de sumir!
+        loader.style.transition = 'transform 0.6s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.5s ease-in-out, scale 0.6s cubic-bezier(0.85, 0, 0.15, 1)';
+        loader.style.transform = 'scale(0)';
+        loader.style.opacity = '0';
         
         setTimeout(() => {
             loader.style.pointerEvents = 'none';
