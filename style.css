@@ -66,8 +66,8 @@ body {
 }
 
 /* Interatividade: Ao passar o mouse ou tocar no Card Azul-Marinho, o "i" vibra continuamente */
-#monogram-card:hover .animate-i-glitch,
-#monogram-card:active .animate-i-glitch {
+#monogram-card:not(.animate-imesa-glitch):hover .animate-i-glitch,
+#monogram-card:not(.animate-imesa-glitch):active .animate-i-glitch {
     animation: iVibrarContinuo 0.15s infinite linear;
     cursor: pointer;
 }
@@ -109,9 +109,9 @@ body {
     }
 }
 
-/* Interatividade: Ao passar o mouse ou segurar o dedo no "iMESA", ele entra em glitch vibrante contínuo */
-#brand-title:hover,
-#brand-title:active {
+/* Interatividade: Ao passar o mouse ou segurar o dedo no "iMESA" (Card centralizado e transformado), ele entra em glitch vibrante contínuo */
+#monogram-card.animate-imesa-glitch:hover,
+#monogram-card.animate-imesa-glitch:active {
     animation: heavyGlitchSesc 0.15s infinite linear;
     cursor: pointer;
 }
