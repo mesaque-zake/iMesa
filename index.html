@@ -61,9 +61,9 @@
 
     <div id="loader-screen" class="absolute inset-0 bg-slate-50 z-50 flex flex-col items-center justify-center transition-all duration-[600ms] origin-center">
         
-        <div class="relative flex flex-col items-center justify-center z-20">
+        <div class="relative flex flex-col items-center justify-center z-20 w-full h-full">
             
-            <div class="relative w-48 h-48 flex items-center justify-center transform transition-transform duration-700 md:scale-125">
+            <div class="relative w-full max-w-lg h-[450px] flex items-center justify-center transform transition-transform duration-700 select-none">
                 
                 <div id="icon-A" class="actor absolute w-14 h-14 bg-blue-600 rounded-2xl shadow-lg shadow-blue-600/30 flex items-center justify-center z-20 opacity-0 scale-0">
                     <i data-lucide="smartphone" class="text-white w-7 h-7"></i>
@@ -97,30 +97,34 @@
                     <i data-lucide="settings" class="text-white w-7 h-7"></i>
                 </div>
 
-                <div id="glow-container" class="absolute w-72 h-72 flex items-center justify-center pointer-events-none transition-all duration-[1000ms] hidden opacity-0 z-10 animate-spin-slow">
-                    <div id="glow-1" class="absolute w-12 h-12 rounded-full bg-blue-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-2" class="absolute w-12 h-12 rounded-full bg-emerald-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-3" class="absolute w-12 h-12 rounded-full bg-amber-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-4" class="absolute w-12 h-12 rounded-full bg-red-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-5" class="absolute w-12 h-12 rounded-full bg-fuchsia-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-6" class="absolute w-12 h-12 rounded-full bg-orange-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-7" class="absolute w-12 h-12 rounded-full bg-rose-500/40 blur-xl transition-transform duration-[400ms]"></div>
-                    <div id="glow-8" class="absolute w-12 h-12 rounded-full bg-slate-500/40 blur-xl transition-transform duration-[400ms]"></div>
+
+                <div id="glow-container" class="absolute w-[450px] h-[450px] flex items-center justify-center pointer-events-none transition-all duration-[1000ms] hidden opacity-0 z-10 animate-spin-slow">
+                    <div id="glow-1" class="absolute w-24 h-24 rounded-full bg-blue-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-2" class="absolute w-24 h-24 rounded-full bg-emerald-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-3" class="absolute w-24 h-24 rounded-full bg-amber-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-4" class="absolute w-24 h-24 rounded-full bg-red-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-5" class="absolute w-24 h-24 rounded-full bg-fuchsia-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-6" class="absolute w-24 h-24 rounded-full bg-orange-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-7" class="absolute w-24 h-24 rounded-full bg-rose-500/25 blur-2xl transition-transform duration-[600ms]"></div>
+                    <div id="glow-8" class="absolute w-24 h-24 rounded-full bg-slate-500/25 blur-2xl transition-transform duration-[600ms]"></div>
                 </div>
 
-                <div id="icon-X" class="actor absolute w-64 h-24 flex items-center justify-center z-30" style="transform: scale(0); opacity: 0;">
-                    <div id="monogram-card" class="w-20 h-20 bg-[#020f3d] rounded-2xl shadow-2xl shadow-[#020f3d]/45 flex items-center justify-center font-montserrat text-3xl text-white select-none transition-all duration-700 overflow-hidden whitespace-nowrap">
+
+                <div id="welcome-sesc" class="absolute w-full text-center opacity-0 transform transition-all duration-700 font-montserrat z-20 pointer-events-none" style="transform: translateY(-90px);">
+                    <span class="block text-slate-200/60 font-800 text-6xl md:text-8xl tracking-widest uppercase select-none">Sesc</span>
+                </div>
+                
+                <div id="welcome-brasil" class="absolute w-full text-center opacity-0 transform transition-all duration-700 font-montserrat z-20 pointer-events-none" style="transform: translateY(110px);">
+                    <span class="block text-slate-200/60 font-400 text-5xl md:text-7xl tracking-[0.2em] uppercase select-none">Brasil</span>
+                </div>
+
+
+                <div id="icon-X" class="actor absolute flex items-center justify-center z-30" style="transform: scale(0); opacity: 0;">
+                    <div id="monogram-card" class="w-24 h-24 bg-[#020f3d] rounded-2xl shadow-2xl shadow-[#020f3d]/45 flex items-center justify-center font-montserrat text-4xl text-white select-none transition-all duration-700 overflow-hidden whitespace-nowrap">
                         <span id="monogram-i" class="font-normal animate-i-glitch inline-block transition-colors duration-700">i</span>
                         <span id="monogram-M" class="font-800 ml-[0.5px] transition-colors duration-700">M</span>
                     </div>
-                    <span id="monogram-ESA" class="font-montserrat text-3xl font-800 text-[#020f3d] opacity-0 max-w-0 inline-block overflow-hidden transition-all duration-500" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); margin-left: 0.5px;">ESA</span>
-                </div>
-
-                <div id="welcome-sesc" class="absolute text-center opacity-0 transform transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(-54px);">
-                    <span class="block text-slate-300 font-800 text-sm leading-none tracking-widest uppercase">Sesc</span>
-                </div>
-                <div id="welcome-brasil" class="absolute text-center opacity-0 transform transition-all duration-700 font-montserrat select-none z-30 pointer-events-none" style="transform: translateY(54px);">
-                    <span class="block text-slate-300 font-400 text-xs tracking-widest uppercase">Brasil</span>
+                    <span id="monogram-ESA" class="font-montserrat text-4xl font-800 text-[#020f3d] opacity-0 max-w-0 inline-block overflow-hidden transition-all duration-500" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); margin-left: 2px; tracking-tight">ESA</span>
                 </div>
 
             </div>
@@ -134,7 +138,7 @@
             </button>
         </div>
 
-        <div id="signature" class="absolute bottom-8 opacity-0 transition-opacity duration-1000">
+        <div id="signature" class="absolute bottom-8 opacity-0 transition-opacity duration-1000 z-30">
             <p class="text-xs md:text-sm font-medium text-slate-400">
                 Powered with <span class="text-[#e80523] text-sm md:text-base leading-none">&#10084;</span> by <strong class="text-slate-600">Mesaque</strong>
             </p>
