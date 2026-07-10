@@ -1,20 +1,17 @@
 /* ==========================================
-   MÓDULO DE ESTILOS E FÍSICAS (PLANO B DEFINITIVO)
+   MÓDULO DE ESTILOS E FÍSICAS (LIMPO E DIRETO)
    ========================================== */
 
-/* Regras Globais */
 body, html {
     -webkit-tap-highlight-color: transparent;
-    overflow: hidden; /* Previne scroll acidental */
+    overflow: hidden;
 }
 
-/* Física de Estilingue (Amortecimento Elástico) */
 .actor {
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
                 opacity 0.4s ease-in-out;
 }
 
-/* --- ESTADOS OFFLINE (A FALHA ELÉTRICA) --- */
 .freeze {
     filter: grayscale(100%) brightness(50%) !important;
     opacity: 0.35 !important;
@@ -26,8 +23,7 @@ body, html {
                 opacity 0.3s ease-in-out !important;
 }
 
-/* --- GLITCH DE IDENTIDADE (CIANO E MAGENTA) --- */
-/* Glitch sutil e contínuo para o "i" (Ícone e Bloco Flash) */
+/* Glitch de Identidade para o "i" */
 .animate-i-glitch {
     animation: iGlitch 3s infinite;
     display: inline-block;
@@ -50,4 +46,17 @@ body, html {
         transform: translate(-0.5px, -0.5px);
         text-shadow: -1px 0 0 #00ffff, 1px 0 0 #ff00ff;
     }
+}
+
+/* Glitch rápido para o puxão final */
+.animate-imesa-overload {
+    animation: elegantOverload 0.15s infinite linear;
+    display: inline-block;
+}
+
+@keyframes elegantOverload {
+    0%, 100% { transform: translate(0, 0); text-shadow: none; }
+    25% { transform: translate(-1.5px, 0.5px); text-shadow: -3px 0 0 rgba(0, 255, 255, 0.9), 3px 0 0 rgba(255, 0, 255, 0.9); }
+    50% { transform: translate(1.5px, -0.5px); text-shadow: 3px 0 0 rgba(0, 255, 255, 0.9), -3px 0 0 rgba(255, 0, 255, 0.9); }
+    75% { transform: translate(-0.5px, -0.5px); text-shadow: -2px 0 0 rgba(0, 255, 255, 0.9), 2px 0 0 rgba(255, 0, 255, 0.9); }
 }
