@@ -84,18 +84,25 @@ async function playOpeningSequence() {
             return;
         }
 
-        // ATO 5: Sugados para o centro
+        // --- ATO 5: Sugados violentamente para o centro ---
         icons.forEach(icon => {
-            icon.style.transform = 'translate(0px, 0px) rotate(-180deg) scale(0)';
+            // Anula o elástico do CSS e impõe uma aceleração contínua (ease-in)
+            // A opacidade só começa a cair depois de 0.15s, garantindo que o movimento seja visto
+            icon.style.transition = 'transform 0.4s ease-in, opacity 0.2s ease-in 0.15s';
+            icon.style.transform = 'translate(0px, 0px) rotate(180deg) scale(0)';
             icon.style.opacity = '0';
         });
         
+        // Pausa cravada para a animação do puxão terminar antes de qualquer outra coisa
+        await sleep(400); 
+        
+        // A verificação do GAS foi movida para depois do puxão, para não engasgar a física
         let timeoutCounter = 0;
         while (!iframeLoaded && timeoutCounter < 30) {
             await sleep(500);
             timeoutCounter++;
         }
-        await sleep(350); 
+        await sleep(100);
 
         // ATO 6: Mostrar "SESC iMESA BRASIL" e as auras
         if (glowContainer) {
