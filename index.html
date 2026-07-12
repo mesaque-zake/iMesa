@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sesc iMesa Brasil</title>
-    
+
     <meta property="og:title" content="iMesa!">
     <meta property="og:description" content="Acesse o Ecossistema Operacional do Sesc Mesa Brasil - Unidade Itaquera">
     <meta property="og:image" content="assets/Share.png">
@@ -14,13 +14,14 @@
     <meta name="theme-color" content="#f8fafc">
     <link rel="icon" type="image/png" href="assets/Favicon.png">
     <link rel="apple-touch-icon" href="assets/Icon180.png">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Montserrat:wght@400;800;900&display=swap" rel="stylesheet">
+
+    <!-- Fontes atualizadas com a Abril Fatface para o glitch -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Montserrat:wght@400;800;900&family=Abril+Fatface&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -59,10 +60,22 @@
         <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-r border-b border-slate-100"></div>
     </div>
 
+    <!-- TELA DE CARREGAMENTO -->
     <div id="loader-screen" class="absolute inset-0 w-full h-full bg-slate-50 z-50 flex items-center justify-center origin-center overflow-hidden">
-        
+
         <div class="relative flex items-center justify-center w-[400px] h-[400px] md:scale-110 transform select-none">
             
+            <!-- Logo do Sesc (Oculto no Início) -->
+            <div id="logo-wrapper" class="logo-wrapper absolute z-30 pointer-events-none select-none">
+                <span class="text-sesc" style="font-size: 3.6em; letter-spacing: 0.05em;">SESC</span>
+                <div class="text-imesa">
+                    <span class="text-i" style="font-size: 2.2em;">i</span>
+                    <span style="font-size: 2.8em; letter-spacing: -0.02em;">MESA</span>
+                </div>
+                <span class="text-brasil" style="font-size: 2.5em; letter-spacing: 0.02em; margin-top: -0.05em;">BRASIL</span>
+            </div>
+
+            <!-- Ícones Originais -->
             <div id="icon-A" class="actor absolute w-12 h-12 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
                 <i data-lucide="smartphone" class="text-white w-6 h-6"></i>
             </div>
