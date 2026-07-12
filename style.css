@@ -3,6 +3,7 @@ body, html {
     overflow: hidden;
 }
 
+/* --- ANIMAÇÕES ORIGINAIS --- */
 .actor {
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
                 opacity 0.4s ease-in-out;
@@ -17,4 +18,60 @@ body, html {
 .shatter {
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
                 opacity 0.3s ease-in-out !important;
+}
+
+/* --- NOVA INICIAÇÃO 🪐 --- */
+
+/* Transforma o ícone em pura energia */
+.aura-mode {
+    width: 0px !important;
+    height: 0px !important;
+    background-color: transparent !important;
+    box-shadow: 0 0 30px 15px var(--aura-core), 0 0 100px 60px var(--aura) !important; 
+    border-radius: 50% !important;
+    border: none !important;
+}
+
+/* Base do Logo Central */
+.logo-wrapper {
+    font-size: clamp(14px, 2.5vw, 32px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 0.92; 
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s;
+}
+
+.text-sesc, .text-brasil {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: rgba(15, 23, 42, 0.15);
+}
+
+.text-imesa {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #0f172a; 
+    display: flex;
+    align-items: baseline;
+}
+
+/* Glitch Corrigido e Responsivo */
+.text-i {
+    font-family: 'Abril Fatface', serif;
+    font-style: italic;
+    color: #0f172a;
+    text-shadow: 0.04em 0 0 rgba(0, 255, 255, 0.6),
+                -0.04em -0.02em 0 rgba(255, 0, 255, 0.6);
+    animation: glitch-flicker 4s infinite linear alternate-reverse;
+    margin-right: 0.15em; 
+}
+
+@keyframes glitch-flicker {
+    0%, 100% { text-shadow: 0.04em 0 0 rgba(0, 255, 255, 0.6), -0.04em -0.02em 0 rgba(255, 0, 255, 0.6); }
+    5% { text-shadow: 0.05em 0 0 rgba(0, 255, 255, 0.6), -0.02em -0.01em 0 rgba(255, 0, 255, 0.6); }
+    10%, 95% { text-shadow: 0.03em 0 0 rgba(0, 255, 255, 0.6), -0.04em -0.02em 0 rgba(255, 0, 255, 0.6); }
 }
