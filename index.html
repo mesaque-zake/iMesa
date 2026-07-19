@@ -7,7 +7,8 @@
 
     <meta property="og:title" content="iMesa!">
     <meta property="og:description" content="Acesse o Ecossistema Operacional do Sesc Mesa Brasil - Unidade Itaquera">
-    <meta property="og:image" content="assets/Share.png">
+    <!-- ATENÇÃO: Substitua a URL abaixo pelo link real do seu GitHub Pages para a imagem aparecer no Zap/Teams -->
+    <meta property="og:image" content="https://SEU-USUARIO.github.io/SEU-REPOSITORIO/assets/Share.png">
     <meta property="og:type" content="website">
 
     <link rel="manifest" href="manifest.json">
@@ -37,11 +38,12 @@
 </head>
 <body class="bg-[#0f172a] overflow-hidden font-sans text-slate-800 antialiased select-none w-screen h-screen m-0 p-0">
 
+    <!-- iFrame com "Cofre Aberto" para todas as permissões do GAS -->
     <iframe 
         id="gas-frame"
         src="https://script.google.com/macros/s/AKfycbwhpn3mgIIJ5I83uMoC2wT3c87UAo0hJEzu1XjwsNZy-8Cyi-3ircgUF0v9wn8gugmJ/exec" 
         class="absolute inset-0 w-full h-full border-none z-0"
-        allow="geolocation *; clipboard-write *">
+        allow="geolocation *; clipboard-write *; clipboard-read *; camera *; microphone *; fullscreen *; display-capture *">
     </iframe>
 
     <button id="install-btn" onclick="installPWA()" class="absolute bottom-6 right-6 md:bottom-10 md:right-10 bg-slate-800 hover:bg-slate-700 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-2 z-40 hidden opacity-0 translate-y-10 transition-all duration-500">
@@ -60,11 +62,11 @@
     </div>
 
     <!-- TELA DE CARREGAMENTO -->
-    <div id="loader-screen" class="absolute inset-0 w-full h-full bg-slate-50 z-50 flex items-center justify-center origin-center overflow-hidden">
+    <div id="loader-screen" class="absolute inset-0 w-full h-full bg-[#0f172a] z-50 flex items-center justify-center origin-center overflow-hidden transition-transform duration-700 ease-in-out">
 
         <div class="relative flex items-center justify-center w-[400px] h-[400px] md:scale-110 transform select-none">
             
-            <!-- Logo do Sesc (Com simetria Flexbox e Azul Marinho) -->
+            <!-- Logo do Sesc -->
             <div id="logo-wrapper" class="logo-wrapper absolute z-30 pointer-events-none select-none">
                 <span class="text-sesc">SESC</span>
                 <div class="text-imesa">
@@ -74,7 +76,7 @@
                 <span class="text-brasil">BRASIL</span>
             </div>
 
-            <!-- Ícones Originais -->
+            <!-- Ícones (Os 10 Dançarinos) -->
             <div id="icon-A" class="actor absolute w-12 h-12 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
                 <i data-lucide="smartphone" class="text-white w-6 h-6"></i>
             </div>
@@ -98,6 +100,14 @@
             </div>
             <div id="icon-G" class="actor absolute w-12 h-12 bg-slate-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
                 <i data-lucide="settings" class="text-white w-6 h-6"></i>
+            </div>
+            
+            <!-- NOVOS: Guia e Manual -->
+            <div id="icon-I" class="actor absolute w-12 h-12 bg-cyan-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
+                <i data-lucide="leaf" class="text-white w-6 h-6"></i>
+            </div>
+            <div id="icon-J" class="actor absolute w-12 h-12 bg-violet-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0">
+                <i data-lucide="library" class="text-white w-6 h-6"></i>
             </div>
 
         </div>
