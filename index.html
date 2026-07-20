@@ -20,10 +20,11 @@
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mesaque-zake/iMesa/refs/heads/main/assets/Favicon.png">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/mesaque-zake/iMesa/refs/heads/main/assets/Icon180.png">
 
-    <!-- FONTES E ÍCONES EXTERNOS -->
+    <!-- FONTES -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Montserrat:wght@400;800;900&family=Abril+Fatface&display=swap" rel="stylesheet">
+    
+    <!-- ICONS: Tabler Icons (Novo) & Tailwind -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -50,12 +51,13 @@
         body, html {
             -webkit-tap-highlight-color: transparent;
             overflow: hidden;
-            background-color: #0f172a;
+            background-color: #0f172a; /* Fundo invisível por trás do iframe */
         }
 
-        /* --- ANIMAÇÕES GEOMÉTRICAS --- */
+        /* --- ANIMAÇÕES DE FÍSICA (EFEITO ESTILINGUE) --- */
         .actor {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+            /* O cubic-bezier(0.34, 1.56, 0.64, 1) é o segredo do efeito estilingue (overshoot) */
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
                         opacity 0.3s ease-in-out;
         }
 
@@ -65,31 +67,35 @@
             transition: filter 0.8s ease-in-out, opacity 0.8s ease-in-out !important;
         }
 
-        /* --- AQUARELA NO FUNDO CLARO (AURAS) --- */
+        .shatter {
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.4s ease-in-out !important;
+        }
+
+        /* --- AURA PASTEL E CLEAN (As 6 Orbes) --- */
         .aura-mode {
             width: 0px !important;
             height: 0px !important;
             background-color: transparent !important;
-            /* Box shadow ultra denso e blur forte para efeito de fumaça */
-            box-shadow: 0 0 50px 25px var(--aura-core), 0 0 150px 80px var(--aura-shadow) !important; 
+            /* Um blur maciço porém muito suave, sem estourar as cores. Cria o efeito esfumaçado clean */
+            box-shadow: 0 0 90px 60px var(--aura-core) !important; 
             border-radius: 50% !important;
             border: none !important;
-            /* MULTIPLY: O segredo para fundos claros. Cria mistura subtrativa brilhante (aquarela) sem lama */
-            mix-blend-mode: multiply; 
-            filter: blur(10px);
-            opacity: 0.9;
+            mix-blend-mode: normal; /* No fundo branco, normal com transparência evita a lama */
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        /* Magia de GPU para esconder o conteúdo sem matar o elemento no DOM */
+        /* Esconde o ícone sem matar o elemento do DOM */
         .aura-mode > * {
             opacity: 0 !important;
             transform: scale(0) !important;
             transition: opacity 0.1s ease-out, transform 0.1s ease-out !important;
         }
 
-        /* --- BURADO NEGRO (O GRAN FINALE) --- */
         #loader-screen {
-            clip-path: circle(150% at 50% 50%); /* Preparado para implodir */
+            transition: background-color 0.4s cubic-bezier(0.9, 0, 0.1, 1), opacity 0.4s ease-out;
         }
 
         /* --- LOGO OFICIAL --- */
@@ -102,7 +108,7 @@
             gap: 0.15em;
             transform: scale(0);
             opacity: 0;
-            z-index: 10;
+            z-index: 30;
         }
 
         .text-sesc, .text-brasil {
@@ -121,6 +127,8 @@
             display: flex;
             align-items: baseline;
             line-height: 0.8;
+            position: relative;
+            z-index: 30;
         }
         .text-imesa .mesa { font-size: 2.8em; letter-spacing: -0.02em; }
         .text-i {
@@ -133,9 +141,10 @@
         }
     </style>
 </head>
+
 <body class="bg-slate-50 overflow-hidden font-sans text-slate-800 antialiased select-none w-screen h-screen m-0 p-0">
 
-    <!-- IFRAME COM PODERES NATIVOS (Sandbox e Permissões Full) -->
+    <!-- IFRAME COM PODERES NATIVOS MÁXIMOS -->
     <iframe 
         id="gas-frame"
         src="https://script.google.com/macros/s/AKfycbwqH_39LNMF3UorGX_s_FogN8qKz8aCdL2PbzMXHnshFO80ucoHrAkVJyzHlf48f_54/exec" 
@@ -164,32 +173,33 @@
 
         <div class="relative flex items-center justify-center w-[400px] h-[400px] md:scale-110 transform select-none">
             
-            <div id="logo-wrapper" class="logo-wrapper absolute z-30 pointer-events-none select-none">
+            <div id="logo-wrapper" class="logo-wrapper absolute z-40 pointer-events-none select-none">
                 <span class="text-sesc">SESC</span>
                 <div class="text-imesa"><span class="text-i">i</span><span class="mesa">MESA</span></div>
                 <span class="text-brasil">BRASIL</span>
             </div>
 
-            <!-- OS 10 ATORES (ÍCONES) -->
-            <div id="icon-A" class="actor absolute w-12 h-12 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="smartphone" class="text-white w-6 h-6"></i></div>
-            <div id="icon-B" class="actor absolute w-12 h-12 bg-emerald-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="droplets" class="text-white w-6 h-6"></i></div>
-            <div id="icon-C" class="actor absolute w-12 h-12 bg-amber-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="bar-chart-3" class="text-white w-6 h-6"></i></div>
-            <div id="icon-D" class="actor absolute w-12 h-12 bg-fuchsia-800 rounded-2xl shadow-lg flex items-center justify-center z-20 font-dancing opacity-0 scale-0"><span class="text-white text-xl font-bold leading-none mt-1">W</span></div>
-            <div id="icon-E" class="actor absolute w-12 h-12 bg-orange-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="receipt" class="text-white w-6 h-6"></i></div>
-            <div id="icon-F" class="actor absolute w-12 h-12 bg-rose-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="gamepad-2" class="text-white w-6 h-6"></i></div>
-            <div id="icon-G" class="actor absolute w-12 h-12 bg-slate-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="settings" class="text-white w-6 h-6"></i></div>
-            <div id="icon-H" class="actor absolute w-12 h-12 bg-red-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="file-text" class="text-white w-6 h-6"></i></div>
+            <!-- OS 9 ATORES (O Grid 3x3 Perfeito) -->
+            <!-- Top Row -->
+            <div id="icon-0" class="actor absolute w-12 h-12 bg-fuchsia-800 rounded-2xl shadow-lg flex items-center justify-center z-20 font-dancing opacity-0 scale-0"><span class="text-white text-xl font-bold leading-none mt-1">W</span></div>
+            <div id="icon-1" class="actor absolute w-12 h-12 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="smartphone" class="text-white w-6 h-6"></i></div>
+            <div id="icon-2" class="actor absolute w-12 h-12 bg-emerald-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="droplets" class="text-white w-6 h-6"></i></div>
             
-            <!-- NOVOS ATORES (TABLER ICONS) -->
-            <div id="icon-I" class="actor absolute w-12 h-12 bg-cyan-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i class="ti ti-leaf text-white text-2xl"></i></div>
-            <div id="icon-J" class="actor absolute w-12 h-12 bg-violet-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i class="ti ti-books text-white text-2xl"></i></div>
-
+            <!-- Mid Row -->
+            <div id="icon-3" class="actor absolute w-12 h-12 bg-amber-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="bar-chart-3" class="text-white w-6 h-6"></i></div>
+            <div id="icon-4" class="actor absolute w-12 h-12 bg-orange-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="receipt" class="text-white w-6 h-6"></i></div>
+            <div id="icon-5" class="actor absolute w-12 h-12 bg-red-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="file-text" class="text-white w-6 h-6"></i></div>
+            
+            <!-- Bot Row -->
+            <div id="icon-6" class="actor absolute w-12 h-12 bg-cyan-500 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i class="ti ti-leaf text-white text-2xl"></i></div>
+            <div id="icon-7" class="actor absolute w-12 h-12 bg-violet-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i class="ti ti-books text-white text-2xl"></i></div>
+            <div id="icon-8" class="actor absolute w-12 h-12 bg-rose-600 rounded-2xl shadow-lg flex items-center justify-center z-20 opacity-0 scale-0"><i data-lucide="gamepad-2" class="text-white w-6 h-6"></i></div>
         </div>
 
         <div id="offline-alert" class="absolute flex flex-col items-center justify-center opacity-0 scale-95 transform transition-all duration-500 hidden z-50">
             <i data-lucide="wifi-off" class="text-slate-400 w-12 h-12 mb-3"></i>
-            <span class="text-xl font-montserrat font-black text-slate-700 mb-4 tracking-tight">Sem Conexão</span>
-            <button onclick="window.location.reload()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-full shadow-lg transition-all active:scale-95 focus:outline-none text-sm tracking-wide">
+            <span class="text-xl font-montserrat font-800 text-slate-700 mb-4 tracking-tight">Sem Conexão</span>
+            <button onclick="window.location.reload()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-full shadow-md transition-all active:scale-95 focus:outline-none text-sm tracking-wide">
                 Tentar Novamente
             </button>
         </div>
@@ -206,6 +216,7 @@
         let deferredPrompt = null;
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+        // Background Check do GAS
         window.addEventListener('DOMContentLoaded', () => {
             const iframe = document.getElementById('gas-frame');
             if (iframe) {
@@ -216,187 +227,203 @@
             }
         });
 
-        // ==========================================
-        // A DANÇA DOS 10 ÍCONES (ESPETÁCULO GEOMÉTRICO)
-        // ==========================================
-        async function playOpeningSequence() {
-            try {
-                lucide.createIcons();
-
-                const icons = Array.from({length: 10}, (_, i) => document.getElementById(`icon-${String.fromCharCode(65+i)}`));
-                const logo = document.getElementById('logo-wrapper');
-                const loader = document.getElementById('loader-screen');
-                const offlineAlert = document.getElementById('offline-alert');
-                const signature = document.getElementById('signature');
-
-                // Helper para injetar transições dinâmicas
-                const setTransition = (duration, ease) => icons.forEach(i => i.style.transition = `transform ${duration}s ${ease}, opacity ${duration}s ease`);
-
-                // 1 - A Semente (Dashboard) [0.0s]
-                icons[2].style.opacity = '1'; icons[2].style.transform = 'translate(0px, 0px) scale(1)';
-                await sleep(300);
-
-                // 2 - A Dupla (Dashboard, Aparelhos) [0.3s]
-                setTransition(0.3, 'cubic-bezier(0.34, 1.56, 0.64, 1)');
-                icons[2].style.transform = 'translate(-40px, 0px) scale(1)';
-                icons[0].style.opacity = '1'; icons[0].style.transform = 'translate(40px, 0px) scale(1)';
-                if (signature) { signature.classList.remove('opacity-0'); signature.classList.add('opacity-100'); }
-                await sleep(300);
-
-                // 3 - O Quadrado (add Lavagem, Relatórios) [0.6s]
-                icons[2].style.transform = 'translate(-40px, -40px) scale(1)';
-                icons[0].style.transform = 'translate(40px, -40px) scale(1)';
-                icons[1].style.opacity = '1'; icons[1].style.transform = 'translate(-40px, 40px) scale(1)';
-                icons[7].style.opacity = '1'; icons[7].style.transform = 'translate(40px, 40px) scale(1)';
-                await sleep(300);
-
-                // 4 - O Hexágono (add Ways, Admin) [0.9s]
-                icons[2].style.transform = 'translate(-60px, -30px) scale(1)';
-                icons[0].style.transform = 'translate(60px, -30px) scale(1)';
-                icons[1].style.transform = 'translate(-60px, 30px) scale(1)';
-                icons[7].style.transform = 'translate(60px, 30px) scale(1)';
-                icons[3].style.opacity = '1'; icons[3].style.transform = 'translate(0px, -70px) scale(1)';
-                icons[6].style.opacity = '1'; icons[6].style.transform = 'translate(0px, 70px) scale(1)';
-                await sleep(300);
-
-                // 4.1 - O Losango Estendido (add Reembolso, Games) [1.2s]
-                icons[2].style.transform = 'translate(-50px, -50px) scale(1)';
-                icons[0].style.transform = 'translate(50px, -50px) scale(1)';
-                icons[1].style.transform = 'translate(-50px, 50px) scale(1)';
-                icons[7].style.transform = 'translate(50px, 50px) scale(1)';
-                icons[3].style.transform = 'translate(0px, -90px) scale(1)';
-                icons[6].style.transform = 'translate(0px, 90px) scale(1)';
-                icons[4].style.opacity = '1'; icons[4].style.transform = 'translate(-90px, 0px) scale(1)';
-                icons[5].style.opacity = '1'; icons[5].style.transform = 'translate(90px, 0px) scale(1)';
-                await sleep(300);
-
-                // 5 - A Coroa (add Guia, Manual e forma anel) [1.5s]
-                const radius = 100;
-                const coords = [];
-                // Calcula as posições perfeitas para os 10 ícones no anel
-                for(let i = 0; i < 10; i++) {
-                    const angle = (i * 36 - 90) * (Math.PI / 180);
-                    coords.push({x: radius * Math.cos(angle), y: radius * Math.sin(angle)});
-                }
-                icons.forEach((icon, i) => {
-                    icon.style.opacity = '1';
-                    icon.style.transform = `translate(${coords[i].x}px, ${coords[i].y}px) scale(1)`;
-                });
-                await sleep(350); // Total até aqui ~1.85s
-
-                // MODO OFFLINE (Cacos no Chão)
-                if (!navigator.onLine) {
-                    icons.forEach(icon => icon.classList.add('freeze'));
-                    await sleep(300);
-                    setTransition(0.6, 'cubic-bezier(0.25, 1, 0.5, 1)');
-                    icons.forEach((icon, i) => {
-                        const randomX = (Math.random() - 0.5) * 400;
-                        const randomRot = Math.random() * 360 - 180;
-                        icon.style.transform = `translate(${randomX}px, 300px) rotate(${randomRot}deg) scale(0.5)`;
-                    });
-                    offlineAlert.classList.remove('hidden');
-                    await sleep(50);
-                    offlineAlert.classList.remove('opacity-0', 'scale-95');
-                    offlineAlert.classList.add('opacity-100', 'scale-100');
-                    return; 
-                }
-
-                // 6 - Implosão Primária (Colisão) [~2.0s]
-                setTransition(0.3, 'ease-in');
-                icons.forEach(icon => icon.style.transform = 'translate(0px, 0px) scale(0.1)');
-                if (signature) { signature.style.transition = 'opacity 0.2s'; signature.style.opacity = '0'; }
-                await sleep(300); 
-
-                // Configuração RGB Exata para as Auras (Adaptadas para MULTIPLY em fundo branco)
-                const auraColors = [
-                    { core: 'rgba(37, 99, 235, 0.5)', shadow: 'rgba(59, 130, 246, 0.2)' },  // A: Aparelhos (Azul)
-                    { core: 'rgba(5, 150, 105, 0.5)', shadow: 'rgba(16, 185, 129, 0.2)' },  // B: Lavagem (Esmeralda)
-                    { core: 'rgba(245, 158, 11, 0.5)', shadow: 'rgba(251, 191, 36, 0.2)' }, // C: Dashboard (Âmbar)
-                    { core: 'rgba(134, 25, 143, 0.5)', shadow: 'rgba(192, 38, 211, 0.2)' }, // D: Ways (Fúcsia)
-                    { core: 'rgba(249, 115, 22, 0.5)', shadow: 'rgba(251, 146, 60, 0.2)' }, // E: Reembolso (Laranja)
-                    { core: 'rgba(225, 29, 72, 0.5)', shadow: 'rgba(244, 63, 94, 0.2)' },   // F: Games (Rosa)
-                    { core: 'rgba(100, 116, 139, 0.5)', shadow: 'rgba(148, 163, 184, 0.2)' },// G: Admin (Ardósia)
-                    { core: 'rgba(220, 38, 38, 0.5)', shadow: 'rgba(248, 113, 113, 0.2)' }, // H: Relatórios (Vermelho)
-                    { core: 'rgba(6, 182, 212, 0.5)', shadow: 'rgba(34, 211, 238, 0.2)' },  // I: Guia (Ciano)
-                    { core: 'rgba(124, 58, 237, 0.5)', shadow: 'rgba(139, 92, 246, 0.2)' }  // J: Manual (Violeta)
-                ];
-
-                icons.forEach((icon, index) => {
-                    icon.className = 'absolute z-20 flex items-center justify-center aura-mode'; 
-                    icon.style.setProperty('--aura-core', auraColors[index].core);
-                    icon.style.setProperty('--aura-shadow', auraColors[index].shadow);
-                });
-                await sleep(50); 
-
-                // 7 - O Reveal e a Aquarela [~2.35s]
-                logo.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s';
-                logo.style.transform = 'scale(1)'; 
-                logo.style.opacity = '1';
-
-                setTransition(2.0, 'cubic-bezier(0.25, 1, 0.5, 1)'); 
-                
-                icons.forEach((icon, i) => {
-                    // Explodem para fora do logo, concentrando nas bordas para deixar o centro livre
-                    const angle = (i * 36 - 90 + (Math.random() * 20 - 10)) * (Math.PI / 180);
-                    const r = 140 + Math.random() * 50; 
-                    const scale = 2.0 + Math.random() * 1.5;
-                    icon.style.transform = `translate(${r * Math.cos(angle)}px, ${r * Math.sin(angle)}px) scale(${scale})`;
-                });
-                await sleep(1500); // Flutuando... [~3.85s]
-
-                // Proteção: Espera o GAS no máximo 3 segundos a mais se a net estiver lenta
-                let timeout = 0;
-                while (!iframeLoaded && timeout < 30) { await sleep(100); timeout++; }
-
-                // 8 - O Gran Finale (O Buraco Negro sugando tudo) [~4.0s]
-                // Auras puxam rápido
-                setTransition(0.4, 'cubic-bezier(0.9, 0, 0.1, 1)');
-                icons.forEach(icon => {
-                    icon.style.transform = 'translate(0px, 0px) scale(0)';
-                });
-                
-                logo.style.transition = 'transform 0.4s cubic-bezier(0.9, 0, 0.1, 1), opacity 0.3s';
-                logo.style.transform = 'scale(0)';
-                
-                // Fundo colapsa no centro revelando o GAS limpo
-                loader.style.transition = 'clip-path 0.5s cubic-bezier(0.9, 0, 0.1, 1)';
-                await sleep(50);
-                loader.style.clipPath = 'circle(0% at 50% 50%)';
-
-                await sleep(450); // [~4.5s Total]
-                loader.classList.add('hidden');
-                loader.style.pointerEvents = 'none';
-
-            } catch (error) {
-                console.error("Erro na Dança:", error);
-                document.getElementById('loader-screen').style.display = 'none';
-            }
-        }
-
-        // ==========================================
-        // INFRAESTRUTURA DO APP & ROTAS NATIVAS
-        // ==========================================
-        function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Erro: ', err));
-            }
-        }
-
-        // Navegação nativa que não fecha o PWA (Comunicação com Iframe)
+        // Configuração Nativa: Botão Voltar não fecha o app
         window.addEventListener('DOMContentLoaded', () => { 
             window.history.replaceState({ state: 'pwa_base' }, ''); 
             window.history.pushState({ state: 'pwa_active' }, ''); 
         });
-        
         window.addEventListener('popstate', () => {
             const iframe = document.getElementById('gas-frame');
             if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ action: 'back' }, '*');
             window.history.pushState({ state: 'pwa_active' }, '');
         });
-
         window.addEventListener('message', (event) => { 
             if (event.data && event.data.action === 'exit_app') window.close(); 
         });
+
+        async function playOpeningSequence() {
+            try {
+                lucide.createIcons();
+
+                // Busca os 9 ícones dinamicamente
+                const icons = Array.from({length: 9}).map((_, i) => document.getElementById(`icon-${i}`));
+
+                const signature = document.getElementById('signature');
+                const loader = document.getElementById('loader-screen');
+                const offlineAlert = document.getElementById('offline-alert');
+                const logo = document.getElementById('logo-wrapper');
+
+                // CONSTANTES DA GRID (Matemática Simétrica)
+                const S = 56; // Espaçamento perfeito (Pixels)
+                // pos[0] a pos[8] mapeia as posições X, Y da matriz 3x3
+                const pos = [
+                    {x: -S, y: -S}, {x: 0, y: -S}, {x: S, y: -S}, // Topo: Esq, Centro, Dir
+                    {x: -S, y: 0},  {x: 0, y: 0},  {x: S, y: 0},  // Meio: Esq, Centro, Dir
+                    {x: -S, y: S},  {x: 0, y: S},  {x: S, y: S}   // Baixo: Esq, Centro, Dir
+                ];
+
+                // ATO 1: "o" (O Ponto Central)
+                icons[4].style.opacity = '1'; 
+                icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`;
+                if (signature) { signature.classList.remove('opacity-0'); signature.classList.add('opacity-100'); }
+                await sleep(250);
+
+                // ATO 2: "o o" (Abre a Linha Dupla - Estilingue pra fora)
+                icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(0)`; // some o meio
+                icons[3].style.opacity = '1'; icons[3].style.transform = `translate(${pos[3].x}px, ${pos[3].y}px) scale(1)`;
+                icons[5].style.opacity = '1'; icons[5].style.transform = `translate(${pos[5].x}px, ${pos[5].y}px) scale(1)`;
+                await sleep(250);
+
+                // ATO 2.1: "o o o" (A Linha Tripla - Volta o meio)
+                icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`; 
+                await sleep(250);
+
+                // ATO 3: Cruz (Expande pra Cima e Baixo)
+                icons[1].style.opacity = '1'; icons[1].style.transform = `translate(${pos[1].x}px, ${pos[1].y}px) scale(1)`;
+                icons[7].style.opacity = '1'; icons[7].style.transform = `translate(${pos[7].x}px, ${pos[7].y}px) scale(1)`;
+                await sleep(250);
+
+                // ATO 4: Formando o X (Os cantos pipocam rápido, um a um)
+                const corners = [0, 2, 6, 8];
+                for (let c of corners) {
+                    icons[c].style.opacity = '1'; 
+                    icons[c].style.transform = `translate(${pos[c].x}px, ${pos[c].y}px) scale(1)`;
+                    await sleep(50); // Tiro rápido de 50ms (Pop, Pop, Pop, Pop)
+                }
+                
+                await sleep(600); // Pausa dramática para admirar o Grid 3x3
+
+                // MODO OFFLINE (A Quebra)
+                if (!navigator.onLine) {
+                    icons.forEach(icon => icon.classList.add('freeze'));
+                    await sleep(600);
+                    icons.forEach(icon => icon.classList.add('shatter'));
+
+                    // Caos controlado caindo para baixo
+                    icons[0].style.transform = `translate(-120px, 300px) rotate(-115deg) scale(0.5)`;
+                    icons[1].style.transform = `translate(20px, 280px) rotate(45deg) scale(0.5)`;
+                    icons[2].style.transform = `translate(140px, 320px) rotate(135deg) scale(0.5)`;
+                    icons[3].style.transform = `translate(-180px, 250px) rotate(-85deg) scale(0.5)`;
+                    icons[4].style.transform = `translate(0px, 350px) rotate(15deg) scale(0.5)`;
+                    icons[5].style.transform = `translate(190px, 270px) rotate(-45deg) scale(0.5)`;
+                    icons[6].style.transform = `translate(-100px, 220px) rotate(-165deg) scale(0.5)`;
+                    icons[7].style.transform = `translate(50px, 290px) rotate(90deg) scale(0.5)`;
+                    icons[8].style.transform = `translate(160px, 240px) rotate(60deg) scale(0.5)`;
+
+                    offlineAlert.classList.remove('hidden');
+                    await sleep(50);
+                    offlineAlert.classList.remove('opacity-0', 'scale-95');
+                    offlineAlert.classList.add('opacity-100', 'scale-100');
+                    return;
+                }
+
+                // ATO 6: IMPLOSÃO DO GRID (Todos voltam ao 0,0)
+                icons.forEach(icon => {
+                    icon.classList.remove('actor');
+                    icon.style.transition = 'transform 0.4s cubic-bezier(0.9, 0, 0.1, 1)';
+                    icon.style.transform = 'translate(0px, 0px) scale(0)';
+                });
+
+                if (signature) {
+                    signature.style.transition = 'opacity 0.2s';
+                    signature.style.opacity = '0';
+                }
+
+                await sleep(400);
+
+                // AS 6 AURAS ESCOLHIDAS (Tons Pastéis Claros - Zero Lama)
+                const auraColors = [
+                    'rgba(232, 121, 249, 0.4)', // 0: Fuchsia Pastel
+                    'rgba(96, 165, 250, 0.4)',  // 1: Azul Bebê
+                    'rgba(52, 211, 153, 0.4)',  // 2: Esmeralda Menta
+                    'rgba(253, 224, 71, 0.4)',  // 3: Amarelo Sol
+                    'rgba(251, 146, 60, 0.4)',  // 4: Laranja Pêssego
+                    'rgba(248, 113, 113, 0.4)'  // 5: Vermelho Salmão
+                ];
+
+                // Transmuta os 6 primeiros em Auras e desliga os 3 restantes
+                icons.forEach((icon, index) => {
+                    if (index < 6) {
+                        icon.className = 'absolute z-20 flex items-center justify-center aura-mode'; 
+                        icon.style.setProperty('--aura-core', auraColors[index]);
+                    } else {
+                        icon.style.display = 'none'; // Some permanentemente
+                    }
+                });
+
+                await sleep(50); 
+
+                // ATO 7.1: O NASCIMENTO DO LOGO E AURAS CONCENTRADAS (Imagem 1)
+                logo.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s';
+                logo.style.transform = 'scale(1)'; 
+                logo.style.opacity = '1';
+
+                for(let i=0; i<6; i++) {
+                    icons[i].style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+                
+                // Posições concentradas (Bem coladas ao centro)
+                icons[0].style.transform = 'translate(-30px, -20px) scale(1)';
+                icons[1].style.transform = 'translate(40px, -15px) scale(0.9)';
+                icons[2].style.transform = 'translate(-25px, 30px) scale(1.1)';
+                icons[3].style.transform = 'translate(30px, 20px) scale(1)';
+                icons[4].style.transform = 'translate(-40px, 5px) scale(1.2)';
+                icons[5].style.transform = 'translate(15px, -35px) scale(0.8)';
+
+                await sleep(700); 
+
+                // ATO 7.2: A EXPANSÃO DESPROPORCIONAL (Imagem 2)
+                for(let i=0; i<6; i++) {
+                    icons[i].style.transition = 'transform 2.0s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+                
+                // Flutuam um pouco mais longe, mas não muito, mantendo o visual clean
+                icons[0].style.transform = 'translate(-80px, -60px) scale(1.4)';
+                icons[1].style.transform = 'translate(100px, 70px) scale(1.6)';
+                icons[2].style.transform = 'translate(-90px, 80px) scale(1.3)';
+                icons[3].style.transform = 'translate(80px, -70px) scale(1.7)';
+                icons[4].style.transform = 'translate(-110px, 10px) scale(1.2)';
+                icons[5].style.transform = 'translate(120px, 0px) scale(1.5)';
+
+                await sleep(1800);
+
+                let timeoutCounter = 0;
+                while (!iframeLoaded && timeoutCounter < 30) {
+                    await sleep(500);
+                    timeoutCounter++;
+                }
+
+                // ATO 8: O VÁCUO FINAL (Suga tudo e revela o App)
+                loader.style.backgroundColor = 'transparent'; 
+                loader.style.opacity = '0'; 
+
+                for(let i=0; i<6; i++) {
+                    icons[i].style.transition = 'transform 0.3s cubic-bezier(0.9, 0, 0.1, 1), opacity 0.2s ease-in';
+                    icons[i].style.transform = 'translate(0px, 0px) scale(0)';
+                    icons[i].style.opacity = '0';
+                }
+                
+                logo.style.transition = 'transform 0.3s cubic-bezier(0.9, 0, 0.1, 1), opacity 0.2s ease-in';
+                logo.style.transform = 'scale(0)';
+                logo.style.opacity = '0';
+
+                await sleep(350);
+
+                loader.style.pointerEvents = 'none';
+                loader.classList.add('hidden');
+
+            } catch (error) {
+                console.error("Erro Crítico na Animação:", error);
+                const loader = document.getElementById('loader-screen');
+                if (loader) loader.style.display = 'none';
+            }
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Erro: ', err));
+            }
+        }
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault(); deferredPrompt = e;
@@ -429,7 +456,6 @@
             }
         }
 
-        // Disparo do Motor Principal
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { playOpeningSequence(); registerServiceWorker(); checkIOS(); }, 100);
         });
