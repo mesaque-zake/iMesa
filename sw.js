@@ -1,15 +1,14 @@
 // ========================================== 
-// SERVICE WORKER iMESA - MOTOR OFFLINE (V7)
+// SERVICE WORKER iMESA - MOTOR OFFLINE (V8)
 // ==========================================
 
-const CACHE_NAME = 'imesa-core-v7';
+const CACHE_NAME = 'imesa-core-v8'; // Versão atualizada para forçar o recarregamento
 
 // O "App Shell": Tudo o que o PWA precisa para a coreografia inicial e a tela offline
+// Nota: Removi app.js e style.css desta lista pois unificamos tudo no index.html
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
-    './style.css',
-    './app.js',
     './manifest.json',
     './assets/Favicon.png',
     './assets/Icon180.png',
@@ -22,11 +21,11 @@ const ASSETS_TO_CACHE = [
 // 1. INSTALAÇÃO (Download Seguro do App Shell)
 // ==========================================
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
+    self.skipWaiting(); // Força a atualização imediata do Service Worker nos aparelhos
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then((cache) => {
-            console.log('[Service Worker] Armazenando infraestrutura local na pasta assets...');
+            console.log('[Service Worker v8] Armazenando infraestrutura local...');
             return cache.addAll(ASSETS_TO_CACHE);
         })
     );
@@ -48,7 +47,7 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
-    return self.clients.claim();
+    return self.clients.claim(); // Assume o controle da página imediatamente
 });
 
 // ==========================================
@@ -57,8 +56,13 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const url = event.request.url;
 
-    // ESTRATÉGIA CACHE-FIRST: Para dependências externas pesadas (Tailwind, Lucide e Google Fonts)
-    if (url.includes('tailwindcss') || url.includes('lucide') || url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com')) {
+    // ESTRATÉGIA CACHE-FIRST: Para dependências externas pesadas (Tailwind, Lucide, Google Fonts E Tabler Icons)
+    if (url.includes('tailwindcss') || 
+        url.includes('lucide') || 
+        url.includes('fonts.googleapis.com') || 
+        url.includes('fonts.gstatic.com') ||
+        url.includes('cdn.jsdelivr.net')) { // <- Adicionado suporte ao CDN do Tabler Icons
+        
         event.respondWith(
             caches.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) return cachedResponse;
@@ -73,7 +77,7 @@ self.addEventListener('fetch', (event) => {
             })
         );
     } 
-    // ESTRATÉGIA NETWORK-FIRST: Para os arquivos locais (index, css, js)
+    // ESTRATÉGIA NETWORK-FIRST: Para os arquivos locais (index.html e assets de imagens)
     else {
         event.respondWith(
             fetch(event.request).catch(() => {
