@@ -78,7 +78,7 @@
             height: 0px !important;
             background-color: transparent !important;
             /* Um blur maciço porém muito suave, sem estourar as cores. Cria o efeito esfumaçado clean */
-            box-shadow: 0 0 90px 60px var(--aura-core) !important; 
+            box-shadow: 0 0 60px 40px var(--aura-core) !important; 
             border-radius: 50% !important;
             border: none !important;
             mix-blend-mode: normal; /* No fundo branco, normal com transparência evita a lama */
@@ -266,29 +266,57 @@
                 icons[4].style.opacity = '1'; 
                 icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`;
                 if (signature) { signature.classList.remove('opacity-0'); signature.classList.add('opacity-100'); }
+                await sleep(300);
+
+                // TRUQUE DA MULTIPLICAÇÃO: Prepara 3 e 5 escondidos exatamente atrás do 4
+                [3, 5].forEach(i => {
+                    icons[i].style.transition = 'none'; // Desliga animação
+                    icons[i].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`; // Posição do 4
+                    icons[i].style.opacity = '1';
+                });
+                void icons[4].offsetWidth; // Força o navegador a registrar a posição (reflow)
+                [3, 5].forEach(i => icons[i].style.transition = ''); // Religa a animação (estilingue)
+
+                // ATO 2: "o o" (O 4 some, 3 e 5 atiram para os lados como uma divisão celular)
+                icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(0)`; 
+                icons[3].style.transform = `translate(${pos[3].x}px, ${pos[3].y}px) scale(1)`;
+                icons[5].style.transform = `translate(${pos[5].x}px, ${pos[5].y}px) scale(1)`;
                 await sleep(250);
 
-                // ATO 2: "o o" (Abre a Linha Dupla - Estilingue pra fora)
-                icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(0)`; // some o meio
-                icons[3].style.opacity = '1'; icons[3].style.transform = `translate(${pos[3].x}px, ${pos[3].y}px) scale(1)`;
-                icons[5].style.opacity = '1'; icons[5].style.transform = `translate(${pos[5].x}px, ${pos[5].y}px) scale(1)`;
-                await sleep(250);
-
-                // ATO 2.1: "o o o" (A Linha Tripla - Volta o meio)
+                // ATO 2.1: "o o o" (O 4 nasce de novo no meio)
                 icons[4].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`; 
                 await sleep(250);
 
-                // ATO 3: Cruz (Expande pra Cima e Baixo)
-                icons[1].style.opacity = '1'; icons[1].style.transform = `translate(${pos[1].x}px, ${pos[1].y}px) scale(1)`;
-                icons[7].style.opacity = '1'; icons[7].style.transform = `translate(${pos[7].x}px, ${pos[7].y}px) scale(1)`;
+                // TRUQUE DA MULTIPLICAÇÃO: Prepara 1 e 7 atrás do 4
+                [1, 7].forEach(i => {
+                    icons[i].style.transition = 'none';
+                    icons[i].style.transform = `translate(${pos[4].x}px, ${pos[4].y}px) scale(1)`;
+                    icons[i].style.opacity = '1';
+                });
+                void icons[4].offsetWidth;
+                [1, 7].forEach(i => icons[i].style.transition = '');
+
+                // ATO 3: Cruz (Atiram para Cima e Baixo a partir do centro)
+                icons[1].style.transform = `translate(${pos[1].x}px, ${pos[1].y}px) scale(1)`;
+                icons[7].style.transform = `translate(${pos[7].x}px, ${pos[7].y}px) scale(1)`;
                 await sleep(250);
 
-                // ATO 4: Formando o X (Os cantos pipocam rápido, um a um)
-                const corners = [0, 2, 6, 8];
-                for (let c of corners) {
-                    icons[c].style.opacity = '1'; 
-                    icons[c].style.transform = `translate(${pos[c].x}px, ${pos[c].y}px) scale(1)`;
-                    await sleep(50); // Tiro rápido de 50ms (Pop, Pop, Pop, Pop)
+                // ATO 4: Formando o X (As quinas saem de dentro dos ícones do topo e da base)
+                // 0 e 2 saem de trás do 1 (Topo) | 6 e 8 saem de trás do 7 (Base)
+                const spawns = [
+                    { id: 0, from: 1 }, { id: 2, from: 1 }, 
+                    { id: 6, from: 7 }, { id: 8, from: 7 }
+                ];
+                
+                for (let s of spawns) {
+                    icons[s.id].style.transition = 'none';
+                    icons[s.id].style.transform = `translate(${pos[s.from].x}px, ${pos[s.from].y}px) scale(1)`;
+                    icons[s.id].style.opacity = '1';
+                    void icons[s.id].offsetWidth; // Magia do Reflow
+                    icons[s.id].style.transition = '';
+                    
+                    icons[s.id].style.transform = `translate(${pos[s.id].x}px, ${pos[s.id].y}px) scale(1)`;
+                    await sleep(70); // Tiro rápido um a um
                 }
                 
                 await sleep(600); // Pausa dramática para admirar o Grid 3x3
